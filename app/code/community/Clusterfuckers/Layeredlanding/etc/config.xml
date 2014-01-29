@@ -15,6 +15,13 @@
                 </args>
             </layeredlanding>
         </routers>
+		<layout>
+			<updates>
+				<layeredlanding>
+					<file>layeredlanding.xml</file>
+				</layeredlanding>
+			</updates>
+		</layout>
     </frontend>
     <admin>
         <routers>
