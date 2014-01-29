@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <layeredlanding_adminhtml_layeredlanding_index>
+        <reference name="content">
+            <block type="layeredlanding/adminhtml_layeredlanding" name="layeredlanding" />
+        </reference>
+    </layeredlanding_adminhtml_layeredlanding_index>
+</layout>

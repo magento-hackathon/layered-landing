@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Clusterfuckers_Layeredlanding>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Clusterfuckers_Layeredlanding>
+    </modules>
+</config>

@@ -1,0 +1,71 @@
+<?php 
+$_htmlId      = $this->getElement()->getHtmlId();
+$_htmlClass   = $this->getElement()->getClass();
+$_htmlName    = $this->getElement()->getName();
+$_readonly    = $this->getElement()->getReadonly();
+
+$collection = Mage::registry('layeredlanding_data')
+				->getAttributes();
+
+$_counter = 0;
+?>
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td colspan="10" class="grid hours">
+		<table id="attribute-options-table" class="data border layeredlanding-attributematch" cellspacing="0" cellpadding="0"><tbody>
+			<tr class="headings">
+				<th><?php echo $this->__('Attribute code') ?></th>
+				<th><?php echo $this->__('Value') ?></th>
+				<th class="last"><button id="add_new_option_button" title="Add Option" type="button" class="scalable add"><span><span><span><?php echo $this->__('Add Option') ?></span></span></span></button></th>
+			</tr>
+<?php foreach ($collection as $_item): ?>
+<tr class="option-row layeredlanding-attributematch-row" id="row-<?php echo $_counter?>">
+	<td><select id="attribute_select_<?php echo $_counter ?>" name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][attribute]" class="input-select"><?php echo $this->getAttributeOptions((int)$_item->getData('attribute_id'));?></select></td>
+	<td><select id="value_select_<?php echo $_counter ?>" name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][value]" class="input-select"><?php echo $this->getValueOptions((int)$_item->getData('attribute_id'), $_item->getData('value'));?></select></td>
+	<td class="a-left" id="delete_button_container_option_<?php echo $_counter ?>'">
+		<input name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][id]" value="<?php echo $_item->getId() ?>" type="hidden">
+		<input id="delete-row-<?php echo $_counter ?>" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_<?php echo $_counter ?>]" value=""/>
+		<button onclick="$('row-<?php echo $_counter ?>').style.display='none'; $('delete-row-<?php echo $_counter ?>').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button>
+	</td>
+</tr>
+<?php
+		$_counter++;
+	endforeach;
+?>
+</tbody></table>
+
+<script type="text/javascript">//<![CDATA[
+
+var _form_html_row = '<tr class="option-row layeredlanding-attributematch-row" id="row-{{id}}"><td><select id="attribute_select_{{id}}" onchange="_update_value_select(this);" name="<?php echo $_htmlName; ?>[value][option_{{id}}][attribute]" class="input-select"><?php echo $this->getAttributeOptions();?></select></td><td><select id="value_select_{{id}}" name="<?php echo $_htmlName; ?>[value][option_{{id}}][value]" class="input-select"></select></td><td class="a-left" id="delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="$(\'row-{{id}}\').style.display=\'none\'; $(\'delete-row-{{id}}\').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
+
+var _layeredlanding_counter = <?php echo $_counter?>;
+
+$('add_new_option_button').observe('click', function(){
+	$('attribute-options-table').insert(_form_html_row.replace(/\{\{id\}\}/ig, _layeredlanding_counter));
+	_layeredlanding_counter++;
+});
+
+$('attribute-options-table').select('[id*="attribute_select_"]').each(function(elm){
+	$(elm).observe('change', function(){
+		_update_value_select(this);
+	});
+});
+
+function _update_value_select(elm)
+{
+	console.log(elm);
+	var id = $(elm).readAttribute('id').replace('attribute_select_', '');
+	var target = $('value_select_' + id);
+	
+	var attributeid = $(elm).value;
+	
+	new Ajax.Request('<?php echo Mage::getUrl("layeredlanding/index/ajaxValues/");?>?attributeid=' + attributeid, {
+		onSuccess: function(response) {
+			target.update(response.responseText);
+		}
+	});
+}
+
+//]]></script>
+	</td>
+</tr>
