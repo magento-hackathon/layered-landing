@@ -53,7 +53,7 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Renderer_Attr
      * @param int $option_id
      * @return string
 	 */ 
-	public function getValueOptions($attribute_id = 0, $option_id = 0)
+	public function getValueOptions($attribute_id = 0, $option_id = 0, $input_name)
 	{
 		$store_ids = Mage::registry('layeredlanding_data')->getStoreIds();
 		if (explode(',', $store_ids) > 1) // if more than 1 store just use system level
@@ -61,6 +61,6 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Renderer_Attr
 			$store_ids = 0;
 		}
 		
-		return Mage::getModel('layeredlanding/attributes')->getGridOptionsHtml($attribute_id, $store_ids, $option_id);
+		return Mage::getModel('layeredlanding/attributes')->getGridOptionsHtml($attribute_id, $store_ids, $option_id, $input_name);
 	}
 }
