@@ -4,6 +4,9 @@
         <Hackathon_Layeredlanding>
             <active>true</active>
             <codePool>community</codePool>
+            <depends>
+                <Mage_Catalog />
+            </depends>
         </Hackathon_Layeredlanding>
     </modules>
 </config>

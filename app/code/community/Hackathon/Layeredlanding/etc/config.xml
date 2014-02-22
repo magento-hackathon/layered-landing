@@ -144,7 +144,7 @@
                 <observers>
                     <layeredurl>
                         <type>singleton</type>
-                        <class>Hackathon_Layeredlanding_Controller_Router</class>
+                        <class>layeredlanding/observer</class>
                         <method>addLayeredRouter</method>
                     </layeredurl>
                 </observers>
