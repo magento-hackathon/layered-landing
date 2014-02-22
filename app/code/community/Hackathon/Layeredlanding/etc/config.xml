@@ -16,6 +16,11 @@
                     <design>Hackathon_Layeredlanding_Model_Design</design>
                 </rewrite>
             </catalog>
+            <catalog>
+                <rewrite>
+                    <layer_filter_item>Hackathon_Layeredlanding_Model_Catalog_Layer_Filter_Item</layer_filter_item>
+                </rewrite>
+            </catalog>
             <layeredlanding_mysql4>
                 <class>Hackathon_Layeredlanding_Model_Mysql4</class>
                 <entities>
