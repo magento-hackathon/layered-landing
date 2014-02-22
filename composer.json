@@ -30,12 +30,17 @@
         "magento-hackathon/magento-composer-installer": "*"
     },
     "require-dev": {
-        "ecomdev/mage-ci": "dev-master"
+        "ecomdev/mage-ci": "dev-master",
+        "phpunit/phpunit": "3.7.*"
     },
     "config": {
         "bin-dir": "bin"
     },
     "repositories":[
+        {
+            "url": "https://github.com/EcomDev/EcomDev_PHPUnit",
+            "type": "git"
+        },
         {
             "type": "composer",
             "url": "http://packages.firegento.com"
