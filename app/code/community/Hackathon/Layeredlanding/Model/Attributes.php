@@ -10,7 +10,6 @@ class Hackathon_Layeredlanding_Model_Attributes extends Mage_Core_Model_Abstract
 	
 	public function getGridOptionsHtml($attribute_id = 0, $store_id = 0, $option_id = 0)
 	{
-		
 		$attribute = Mage::getModel('eav/entity_attribute')->load((int)$attribute_id);
 		
         if ($attribute->getId() && $attribute->getData('frontend_input') == 'select') 
@@ -21,16 +20,15 @@ class Hackathon_Layeredlanding_Model_Attributes extends Mage_Core_Model_Abstract
             $html = '<option value="">-- select --</option>';
             foreach ($options as $option)
             {
-				$selected = ((int)$option['value'] == $option_id) ? 'selected ' : '' ;
-			
-                $html .= '<option value="' . $option['value'] . '">' . $option['label'] . '</option>';
+				$selected = ((int)$option['value'] == (int)$option_id) ? 'selected ' : '' ;
+                $html .= '<option '.$selected.'value="' . $option['value'] . '">' . $option['label'] . '</option>';
             }
-
+			
             return $html;
         }
 		else
 		{
-			return '<input type="text"'
+			return '';
 		}
 	}
 }

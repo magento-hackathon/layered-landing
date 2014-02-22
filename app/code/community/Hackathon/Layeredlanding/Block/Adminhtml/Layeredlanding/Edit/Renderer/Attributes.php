@@ -61,6 +61,6 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Renderer_Attr
 			$store_ids = 0;
 		}
 		
-		return Mage::getModel('layeredlanding/attributes')->($attribute_id, $store_ids, $option_id);
+		return Mage::getModel('layeredlanding/attributes')->getGridOptionsHtml($attribute_id, $store_ids, $option_id);
 	}
 }
