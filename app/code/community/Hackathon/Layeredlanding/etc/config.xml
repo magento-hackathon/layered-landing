@@ -5,10 +5,20 @@
             <version>0.2.0</version>
         </Hackathon_Layeredlanding>
     </modules>
+	<default>
+		<web>
+			<routers>
+				<hackathon_layeredlanding>
+					<area>frontend</area>
+					<class>Hackathon_Layeredlanding_Controller_Router</class>
+				</hackathon_layeredlanding>
+			</routers>
+		</web>
+	</default>
     <frontend>
         <routers>
             <layeredlanding>
-                <use>standard</use>
+                <use>hackathon_layeredlanding</use>
                 <args>
                     <module>Hackathon_Layeredlanding</module>
                     <frontName>layeredlanding</frontName>
@@ -129,5 +139,16 @@
                 <class>Hackathon_Layeredlanding_Helper</class>
             </layeredlanding>
         </helpers>
+        <events>
+            <controller_front_init_routers>
+                <observers>
+                    <layeredurl>
+                        <type>singleton</type>
+                        <class>Hackathon_Layeredlanding_Controller_Router</class>
+                        <method>addLayeredRouter</method>
+                    </layeredurl>
+                </observers>
+            </controller_front_init_routers>
+        </events>
     </global>
 </config>

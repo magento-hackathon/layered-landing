@@ -12,7 +12,7 @@ class Hackathon_Layeredlanding_Block_Content extends Mage_Core_Block_Template
 		
 		$category->setData('name', 'foob');
 		Mage::register('current_category', $category);
-		
+/*		
 		$layer = Mage::getSingleton('catalog/layer')->getState()->getFilters();
 		foreach ($layer as $attribute)
 		{
@@ -21,5 +21,6 @@ class Hackathon_Layeredlanding_Block_Content extends Mage_Core_Block_Template
 			echo $attribute->getLabel(); // Currently selected value
 			echo $attribute->getFilter()->getRequestVar(); // Filter code (usually attribute code, except category filter, where it equals "cat")
 		}
+*/
 	}
 }
