@@ -58,9 +58,8 @@ function _update_value_select(elm)
 	
 	var attributeid = $(elm).value;
     var storeid = $('store_ids').value;
-    var categoryid = $('category_ids').value;
 	
-	new Ajax.Request('<?php echo Mage::getUrl("adminhtml/layeredlanding/ajaxValues");?>?attributeid=' + attributeid + '&storeid=' + storeid + '&categoryid=' + categoryid, {
+	new Ajax.Request('<?php echo Mage::getUrl("adminhtml/layeredlanding/ajaxValues");?>?attributeid=' + attributeid + '&storeid=' + storeid, {
 		onSuccess: function(response) {
 			target.update(response.responseText);
 		}

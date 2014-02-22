@@ -55,17 +55,12 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Renderer_Attr
 	 */ 
 	public function getValueOptions($attribute_id = 0, $option_id = 0)
 	{
-		$options = Mage::getResourceModel('eav/entity_attribute_option_collection');
-		$options = $options->setAttributeFilter($attribute_id)->setStoreFilter(0)->toOptionArray();
-		
-		$html = '<option value="">-- select --</option>';
-		foreach ($options as $option)
+		$store_ids = Mage::registry('layeredlanding_data')->getStoreIds();
+		if (explode(',', $store_ids) > 1) // if more than 1 store just use system level
 		{
-			$selected = ((int)$option['value'] == $option_id) ? 'selected ' : '' ;
-			
-			$html .= '<option ' . $selected . 'value="' . $option['value'] . '">' . $option['label'] . '</option>';
+			$store_ids = 0;
 		}
 		
-		return $html;
+		return Mage::getModel('layeredlanding/attributes')->($attribute_id, $store_ids, $option_id);
 	}
 }
