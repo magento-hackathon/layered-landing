@@ -1,0 +1,36 @@
+language: php
+php:
+  - 5.3
+  - 5.4
+env:
+  - MAGE=1.7.0.2
+  - MAGE=1.6.2.0
+  - MAGE=1.5.1.0
+before_install:
+  # Environment
+  - sudo apt-get update > /dev/null
+  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
+  - sudo sed -i -e "s,/var/www,$(pwd)/web,g" /etc/apache2/sites-available/default
+  - sudo /etc/init.d/apache2 restart
+
+  # Selenium
+  - "sh -e /etc/init.d/xvfb start"
+  - "export DISPLAY=:99.0"
+  - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.31.0.jar"
+  - "java -jar selenium-server-standalone-2.31.0.jar > /dev/null &"
+  - sleep 5
+  - "wget http://chromedriver.googlecode.com/files/chromedriver_linux32_23.0.1240.0.zip && unzip chromedriver_linux32_23.0.1240.0.zip && sudo mv chromedriver /usr/bin"
+
+  # Magento
+  - mkdir test/
+  - composer install --dev
+before_script:
+  - CURR_DIR=$(pwd)
+  - bin/mage-ci install test $MAGE magento_test -c -t -r http://mage-ci.ecomdev.org
+  - bin/mage-ci install-module test $CURR_DIR
+  - git clone https://github.com/EcomDev/EcomDev_PHPUnit.git -b dev ./phpunit/
+  - bin/mage-ci install-module $CURR_DIR/test $CURR_DIR/phpunit/
+script:
+  - bin/mage-ci phpunit test
+  - cd test/
+  - php shell/behat.php
