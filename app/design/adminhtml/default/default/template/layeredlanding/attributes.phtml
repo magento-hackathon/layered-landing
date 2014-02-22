@@ -53,13 +53,14 @@ $('attribute-options-table').select('[id*="attribute_select_"]').each(function(e
 
 function _update_value_select(elm)
 {
-	console.log(elm);
 	var id = $(elm).readAttribute('id').replace('attribute_select_', '');
 	var target = $('value_select_' + id);
 	
 	var attributeid = $(elm).value;
+    var storeid = $('store_ids').value;
+    var categoryid = $('category_ids').value;
 	
-	new Ajax.Request('<?php echo Mage::getUrl("adminhtml/layeredlanding/ajaxValues");?>?attributeid=' + attributeid, {
+	new Ajax.Request('<?php echo Mage::getUrl("adminhtml/layeredlanding/ajaxValues");?>?attributeid=' + attributeid + '&storeid=' + storeid + '&categoryid=' + categoryid, {
 		onSuccess: function(response) {
 			target.update(response.responseText);
 		}

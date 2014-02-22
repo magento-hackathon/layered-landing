@@ -152,18 +152,24 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 
     public function ajaxValuesAction()
     {
-        $attribute_id = (int)Mage::app()->getRequest()->getParam('attributeid');
+        $request = Mage::app()->getRequest();
 
-        $options = Mage::getResourceModel('eav/entity_attribute_option_collection');
-        $options = $options->setAttributeFilter($attribute_id)->setStoreFilter(0)->toOptionArray();
+        $attribute_id = (int)$request->getParam('attributeid', false);
+        $store_id = $request->getParam('storeid', 0);
+        $category_id = $request->getParam('categoryid', false);
 
-        $html = '<option value="">-- select --</option>';
-        foreach ($options as $option)
-        {
-            $html .= '<option value="' . $option['value'] . '">' . $option['label'] . '</option>';
+        if ($attribute_id) {
+            $options = Mage::getResourceModel('eav/entity_attribute_option_collection');
+            $options = $options->setAttributeFilter($attribute_id)->setStoreFilter($store_id)->toOptionArray();
+
+            $html = '<option value="">-- select --</option>';
+            foreach ($options as $option)
+            {
+                $html .= '<option value="' . $option['value'] . '">' . $option['label'] . '</option>';
+            }
+
+            echo $html;
         }
-
-        echo $html;
     }
 
 }
