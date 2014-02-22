@@ -33,6 +33,7 @@ $_counter = 0;
 	endforeach;
 ?>
 </tbody></table>
+<div id="estimate-product-collection"></div>
 
 <script type="text/javascript">//<![CDATA[
 
@@ -69,6 +70,34 @@ function _update_value_select(elm)
 	new Ajax.Request('<?php echo Mage::getUrl("adminhtml/layeredlanding/ajaxValues");?>?' + querystring, {
 		onSuccess: function(response) {
 			target.update(response.responseText);
+		}
+	});
+}
+
+function _estimate_product_count()
+{
+	var queryarray = {};
+	
+	$('attribute-options-table').select('.option-row').each(function(elm){
+		var attribute = $(elm).select('[id*="attribute_select_"]').first().value;
+		var value = $(elm).select('.attribute-value').first().value;
+		queryarray[""+attribute] = value;
+	});
+	
+	 queryarray["category"] = $('category_ids').getValue();
+	 queryarray["store"] = '';
+	 $('store_ids').select('option[selected]').each(function(opt, i){
+		var optval = parseInt($(opt).readAttribute('value'));
+		if (optval == 0) return;
+		
+		queryarray["store"] += optval+','
+	 });
+	
+	var querystring = $H(queryarray).toQueryString();
+	
+	new Ajax.Request('<?php echo Mage::getUrl("adminhtml/layeredlanding/ajaxCountResult");?>?' + querystring, {
+		onSuccess: function(response) {
+			$('estimate-product-collection').update('<b>' + response.responseText + '</b>');
 		}
 	});
 }

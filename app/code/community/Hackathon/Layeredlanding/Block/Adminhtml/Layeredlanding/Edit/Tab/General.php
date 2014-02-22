@@ -90,6 +90,7 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
                 'class' => 'required-entry',
                 'required' => true,
                 'name' => 'category_ids',
+				'onchange' => '_estimate_product_count();',
                 'values' => Mage::getSingleton('layeredlanding/options_categories')->toOptionArray(),
             )
         );
@@ -141,6 +142,7 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
                     'title' => Mage::helper('cms')->__('Store View'),
                     'required' => true,
                     'values' => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true),
+					'onchange' => '_estimate_product_count();',
                 )
             );
             $renderer = $this->getLayout()->createBlock('adminhtml/store_switcher_form_renderer_fieldset_element');
@@ -151,7 +153,8 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
                 'hidden',
                 array(
                     'name' => 'store_ids',
-                    'value' => Mage::app()->getStore(true)->getId()
+                    'value' => Mage::app()->getStore(true)->getId(),
+					'onchange' => '_estimate_product_count();',
                 )
             );
         }

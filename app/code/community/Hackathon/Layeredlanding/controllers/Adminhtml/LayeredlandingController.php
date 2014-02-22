@@ -166,4 +166,46 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 		echo Mage::getModel('layeredlanding/attributes')->getGridOptionsHtml($attribute_id, $store_id, 0, $input_name);
     }
 
+    public function ajaxCountResultAction()
+    {
+        $request = Mage::app()->getRequest()->getParams();
+		
+		$category = $request['category'];
+		$stores = explode(',', trim($request['store'], ','));
+		
+		unset($request['isAjax'], $request['form_key'], $request['category'], $request['store']);
+		
+		foreach ($stores as $store)
+		{
+			$collection = Mage::getModel('catalog/product')->getCollection();
+			
+			// get not only this cat, but also it's childrens products
+			$categories = Mage::getModel('catalog/category')->load((int)$category)->getAllChildren(true);
+			$collection->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id=entity_id', null, 'left');
+			$collection->addAttributeToFilter('category_id', array('in' => $categories));
+						
+			$collection->setStoreId((int)$store);
+			
+			foreach ($request as $attribute_id => $value)
+			{
+				$attribute_code = Mage::helper('layeredlanding')->attributeIdToCode($attribute_id);
+				if ($attribute_code == 'price')
+				{
+					$price_range = explode('-', $value);
+					$collection->addFieldToFilter('price', array('from'=>$price_range[0],'to'=>$price_range[1]));
+				}
+				else
+				{
+					$collection->addAttributeToFilter($attribute_code, $value);
+				}
+			}
+			
+			Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
+			
+			//var_dump((string)$collection->getSelect());exit;
+			
+			echo Mage::helper('layeredlanding')->__('Estimated product count for store \'%s\' is %d', Mage::app()->getStore($store)->getName(), $collection->getSize()) . "<br/>";
+		}
+    }
+
 }
