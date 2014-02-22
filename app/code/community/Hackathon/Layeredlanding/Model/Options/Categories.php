@@ -13,8 +13,6 @@ class Hackathon_Layeredlanding_Model_Options_Categories extends Mage_Core_Model_
 						->addAttributeToFilter('is_anchor', 1)
 						->addAttributeToFilter('level', array('gt' => 1))
 						->setOrder('level', 'ASC');
-		
-		$categories = array(array('label' => '-- select --', 'value' => '0'));
 	   
 		foreach ($collection as $item)
 		{
