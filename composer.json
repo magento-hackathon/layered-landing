@@ -26,8 +26,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "magento-hackathon/magento-composer-installer": "dev-master",
-        "magento-hackathon/magento-behat-extension": "dev-master"
+        "ecomdev/ecomdev_phpunit": "*",
+        "magento-hackathon/magento-composer-installer": "*"
     },
     "require-dev": {
         "ecomdev/mage-ci": "dev-master"
