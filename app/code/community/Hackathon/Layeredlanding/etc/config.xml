@@ -146,4 +146,11 @@
             </routers>
         </web>
     </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <Hackathon_Layeredlanding />
+            </modules>
+        </suite>
+    </phpunit>
 </config>
