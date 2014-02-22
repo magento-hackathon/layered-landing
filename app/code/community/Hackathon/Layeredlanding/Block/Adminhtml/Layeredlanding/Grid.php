@@ -39,14 +39,16 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Grid extends Mage_
             'header'    => Mage::helper('layeredlanding')->__('Categories'),
             'align'     => 'left',
             'index'     => 'category_ids',
-            'width'     => '100px',
+            'width'     => '200px',
+			'renderer'  => 'Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Renderers_Categoryids',
         ));
  
         $this->addColumn('store_ids', array(
             'header'    => Mage::helper('layeredlanding')->__('Stores'),
             'align'     => 'left',
             'index'     => 'store_ids',
-            'width'     => '100px',
+            'width'     => '200px',
+			'renderer'  => 'Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Renderers_Storeids',
         ));
  
         return parent::_prepareColumns();
