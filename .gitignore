@@ -1709,3 +1709,10 @@ skin/frontend/base/default/lib/prototype/windows/themes/magento.css
 skin/frontend/default/
 skin/install/
 var/
+
+skin/adminhtml/base/default/aoe_profiler/
+skin/frontend/base/default/aoe_profiler/
+app/etc/modules/Aoe_Profiler.xml
+app/code/community/Aoe/
+app/code/community/Varien/
+app/code/community/Zend/
