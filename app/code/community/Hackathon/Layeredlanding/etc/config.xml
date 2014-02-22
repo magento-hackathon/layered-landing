@@ -149,6 +149,17 @@
                     </layeredurl>
                 </observers>
             </controller_front_init_routers>
+            <!--controller_action_layout_generate_blocks_after-->
+            <controller_action_layout_load_before>
+                <observers>
+                    <layeredlanding_add_handle>
+                        <type>singleton</type>
+                        <class>layeredlanding/layout</class>
+                        <method>addLayoutHandle</method>
+                    </layeredlanding_add_handle>
+                </observers>
+            </controller_action_layout_load_before>
+            <!--/controller_action_layout_generate_blocks_after-->
         </events>
     </global>
 </config>
