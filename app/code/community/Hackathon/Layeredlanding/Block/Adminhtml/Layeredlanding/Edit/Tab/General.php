@@ -44,6 +44,7 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
                 'class' => 'required-entry',
                 'required' => true,
                 'name' => 'page_description',
+				'style' => "width:500px;",
             )
         );
 
@@ -77,6 +78,7 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
                 'class' => 'required-entry',
                 'required' => true,
                 'name' => 'meta_description',
+				'style' => "width:500px;",
             )
         );
 
@@ -122,6 +124,7 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
                 'label' => Mage::helper('layeredlanding')->__('Custom Layout Update'),
                 'required' => false,
                 'name' => 'custom_layout_update',
+				'style' => "width:500px;",
             )
         );
 
