@@ -50,6 +50,7 @@ class Hackathon_Layeredlanding_Model_Design extends Mage_Catalog_Model_Design
 				if (!empty($layout_template))
 				{
 					$object->setPageLayout($layout_template);
+                    Mage::app()->getLayout()->getUpdate()->addHandle('page_'.$layout_template);
 				}
 			}
 		}
