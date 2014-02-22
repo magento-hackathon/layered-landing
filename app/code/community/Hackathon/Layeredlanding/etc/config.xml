@@ -5,92 +5,6 @@
             <version>0.3.0</version>
         </Hackathon_Layeredlanding>
     </modules>
-	<default>
-		<web>
-			<routers>
-				<hackathon_layeredlanding>
-					<area>frontend</area>
-					<class>Hackathon_Layeredlanding_Controller_Router</class>
-				</hackathon_layeredlanding>
-			</routers>
-		</web>
-	</default>
-    <frontend>
-        <routers>
-            <layeredlanding>
-                <use>hackathon_layeredlanding</use>
-                <args>
-                    <module>Hackathon_Layeredlanding</module>
-                    <frontName>layeredlanding</frontName>
-                </args>
-            </layeredlanding>
-        </routers>
-		<layout>
-			<updates>
-				<layeredlanding>
-					<file>layeredlanding.xml</file>
-				</layeredlanding>
-			</updates>
-		</layout>
-    </frontend>
-    <admin>
-        <routers>
-			<adminhtml>
-				<args>
-					<modules>
-						<layeredlanding before="Mage_Adminhtml">Hackathon_Layeredlanding_Adminhtml</layeredlanding>
-					</modules>
-				</args>
-			</adminhtml>
-        </routers>
-    </admin>
-    <adminhtml>
-        <menu>
-			<catalog>
-				<children>
-					<attributes>
-						<children>
-							<layeredlanding module="layeredlanding">
-								<title>Attribute landing pages</title>
-								<sort_order>99</sort_order>               
-								<action>adminhtml/layeredlanding</action>
-							</layeredlanding>
-						</children>
-					</attributes>
-				</children>
-			</catalog>
-        </menu>
-        <acl>
-            <resources>
-                <all>
-                    <title>Allow Everything</title>
-                </all>
-                <admin>
-                    <children>
-						<catalog>
-							<children>
-								<attributes>
-									<children>
-										<layeredlanding>
-											<title>Attribute landing pages</title>
-											<sort_order>99</sort_order>
-										</layeredlanding>
-									</children>
-								</attributes>
-							</children>
-						</catalog>
-					</children>
-				</admin>
-			</resources>
-        </acl>
-        <layout>
-            <updates>
-                <layeredlanding>
-                    <file>layeredlanding.xml</file>
-                </layeredlanding>
-            </updates>
-        </layout>
-    </adminhtml>   
     <global>
         <models>
             <layeredlanding>
@@ -138,6 +52,11 @@
             <layeredlanding>
                 <class>Hackathon_Layeredlanding_Block</class>
             </layeredlanding>
+            <catalog>
+                <rewrite>
+                    <layer_state>Hackathon_Layeredlanding_Block_Layer_State</layer_state>
+                </rewrite>
+            </catalog>
         </blocks>
         <helpers>
             <layeredlanding>
@@ -165,4 +84,52 @@
             </controller_action_layout_load_before>
         </events>
     </global>
+    <frontend>
+        <routers>
+            <layeredlanding>
+                <use>hackathon_layeredlanding</use>
+                <args>
+                    <module>Hackathon_Layeredlanding</module>
+                    <frontName>layeredlanding</frontName>
+                </args>
+            </layeredlanding>
+        </routers>
+		<layout>
+			<updates>
+				<layeredlanding>
+					<file>layeredlanding.xml</file>
+				</layeredlanding>
+			</updates>
+		</layout>
+    </frontend>
+    <admin>
+        <routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<layeredlanding before="Mage_Adminhtml">Hackathon_Layeredlanding_Adminhtml</layeredlanding>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <layeredlanding>
+                    <file>layeredlanding.xml</file>
+                </layeredlanding>
+            </updates>
+        </layout>
+    </adminhtml>
+    <default>
+        <web>
+            <routers>
+                <hackathon_layeredlanding>
+                    <area>frontend</area>
+                    <class>Hackathon_Layeredlanding_Controller_Router</class>
+                </hackathon_layeredlanding>
+            </routers>
+        </web>
+    </default>
 </config>
