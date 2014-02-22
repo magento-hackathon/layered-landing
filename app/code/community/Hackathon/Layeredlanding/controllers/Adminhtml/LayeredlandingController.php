@@ -162,20 +162,8 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 
         $attribute_id = (int)$request->getParam('attributeid', false);
         $store_id = $request->getParam('storeid', 0);
-        $category_id = $request->getParam('categoryid', false);
-
-        if ($attribute_id) {
-            $options = Mage::getResourceModel('eav/entity_attribute_option_collection');
-            $options = $options->setAttributeFilter($attribute_id)->setStoreFilter($store_id)->toOptionArray();
-
-            $html = '<option value="">-- select --</option>';
-            foreach ($options as $option)
-            {
-                $html .= '<option value="' . $option['value'] . '">' . $option['label'] . '</option>';
-            }
-
-            echo $html;
-        }
+		
+		echo Mage::getModel('layeredlanding/attributes')->getGridOptionsHtml($attribute_id, $store_id);
     }
 
 }
