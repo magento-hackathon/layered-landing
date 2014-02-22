@@ -18,7 +18,7 @@ class Hackathon_Layeredlanding_Model_Layeredlanding extends Mage_Core_Model_Abst
     public function loadByUrl($url)
     {
         $collection = $this->getCollection()
-            ->addFieldToSelect('store_ids');
+            ->addFieldToSelect('store_ids')
             ->addFieldToFilter('page_url', array('eq' => $url));
 
         if ($collection->getSize()) 
