@@ -8,7 +8,10 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
         $this->setForm($form);
         $fieldset = $form->addFieldset(
             'layeredlanding_form',
-            array('legend' => Mage::helper('layeredlanding')->__('Landingpage information'))
+            array(
+                'legend' => Mage::helper('layeredlanding')->__('Landingpage information'),
+                'class' => 'fieldset-wide'
+            )
         );
 
         $fieldset->addField(
