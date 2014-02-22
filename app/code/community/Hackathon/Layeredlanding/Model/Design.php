@@ -10,6 +10,7 @@ class Hackathon_Layeredlanding_Model_Design extends Mage_Catalog_Model_Design
 		$landingpage_id = $landingpage->getId();
 		
 		$layout = $observer->getAction()->getLayout();
+		$layout->getUpdate()->addHandle('layeredlanding_page');
 		$layout->getUpdate()->addHandle('layeredlanding_' . $landingpage_id);
 		$layout->generateXml();
 		
