@@ -11,6 +11,11 @@
                 <class>Hackathon_Layeredlanding_Model</class>
                 <resourceModel>layeredlanding_mysql4</resourceModel>
             </layeredlanding>
+            <sitemap>
+                <rewrite>
+                    <sitemap>Hackathon_Layeredlanding_Model_Sitemap</sitemap>
+                </rewrite>
+            </sitemap>
             <catalog>
                 <rewrite>
                     <design>Hackathon_Layeredlanding_Model_Design</design>
@@ -156,6 +161,12 @@
                 </hackathon_layeredlanding>
             </routers>
         </web>
+        <sitemap>
+            <landing>
+                <priority>0.25</priority>
+                <changefreq>daily</changefreq>
+            </landing>
+		</sitemap>
     </default>
     <phpunit>
         <suite>
