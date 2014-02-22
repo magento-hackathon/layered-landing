@@ -29,8 +29,6 @@ class Hackathon_Layeredlanding_Controller_Router extends Mage_Core_Controller_Va
             ->setControllerName('category')
             ->setActionName('view')
             ->setParam('id', $landingPage->getCategoryIds());
-        $pathInfo = 'catalog/category/view/id/' . $landingPage->getCategoryIds();
-        $requestUri = '/' . $pathInfo . '?';
 
         /** @var $attribute Hackathon_Layeredlanding_Model_Attributes */
         foreach ($landingPage->getAttributes() as $attribute) {
@@ -41,8 +39,6 @@ class Hackathon_Layeredlanding_Controller_Router extends Mage_Core_Controller_Va
         $controllerClassName = $this->_validateControllerClassName('Mage_Catalog', 'category');
         $controllerInstance = Mage::getControllerInstance($controllerClassName, $request, $this->getFront()->getResponse());
 
-        $request->setRequestUri(substr($requestUri, 0, -1));
-        $request->setPathInfo($pathInfo);
         $request->setAlias(
             Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS,
             $identifier
