@@ -2,7 +2,13 @@
  
 class Hackathon_Layeredlanding_Model_Layeredlanding extends Mage_Core_Model_Abstract
 {
-	
+    /**
+     * Prefix of model events names
+     *
+     * @var string
+     */
+    protected $_eventPrefix = 'layered_landing';
+
     public function _construct()
     {
         parent::_construct();

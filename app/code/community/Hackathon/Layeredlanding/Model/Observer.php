@@ -34,4 +34,28 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
             }
         }
     }
+
+    public function layeredLandingSaveBefore($observer)
+    {
+        /** @var $obj Hackathon_Layeredlanding_Model_Layeredlanding */
+        $obj = $observer->getDataObject();
+
+        if ($url = $obj->getPageUrl()) {
+            $collection = Mage::getModel('core/url_rewrite')
+                ->getCollection()
+                ->addFieldToFilter('request_path', array('eq' => $url));
+
+            if ($collection->getSize() > 0) {
+                throw new Exception("Url already used by product or category");
+            }
+
+            $collection = Mage::getModel('cms/page')
+                ->getCollection()
+                ->addFieldToFilter('identifier', array('eq' => str_replace('.html', '', $url)));
+
+            if ($collection->getSize() > 0) {
+                throw new Exception("Url already used by CMS page");
+            }
+        }
+    }
 }
