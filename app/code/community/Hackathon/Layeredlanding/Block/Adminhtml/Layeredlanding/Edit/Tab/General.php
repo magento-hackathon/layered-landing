@@ -12,6 +12,39 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
         );
 
         $fieldset->addField(
+            'page_url',
+            'text',
+            array(
+                'label' => Mage::helper('layeredlanding')->__('Page URL'),
+                'class' => 'required-entry',
+                'required' => true,
+                'name' => 'page_url',
+            )
+        );
+
+        $fieldset->addField(
+            'page_title',
+            'text',
+            array(
+                'label' => Mage::helper('layeredlanding')->__('Page title'),
+                'class' => 'required-entry',
+                'required' => true,
+                'name' => 'page_title',
+            )
+        );
+
+        $fieldset->addField(
+            'page_description',
+            'textarea',
+            array(
+                'label' => Mage::helper('layeredlanding')->__('Page description'),
+                'class' => 'required-entry',
+                'required' => true,
+                'name' => 'page_description',
+            )
+        );
+
+        $fieldset->addField(
             'meta_title',
             'text',
             array(
@@ -41,39 +74,6 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
                 'class' => 'required-entry',
                 'required' => true,
                 'name' => 'meta_description',
-            )
-        );
-
-        $fieldset->addField(
-            'page_title',
-            'text',
-            array(
-                'label' => Mage::helper('layeredlanding')->__('Page title'),
-                'class' => 'required-entry',
-                'required' => true,
-                'name' => 'page_title',
-            )
-        );
-
-        $fieldset->addField(
-            'page_description',
-            'textarea',
-            array(
-                'label' => Mage::helper('layeredlanding')->__('Page description'),
-                'class' => 'required-entry',
-                'required' => true,
-                'name' => 'page_description',
-            )
-        );
-
-        $fieldset->addField(
-            'page_url',
-            'text',
-            array(
-                'label' => Mage::helper('layeredlanding')->__('Page URL'),
-                'class' => 'required-entry',
-                'required' => true,
-                'name' => 'page_url',
             )
         );
 

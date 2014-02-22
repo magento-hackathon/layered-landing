@@ -17,7 +17,7 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit extends Mage_
     public function getHeaderText()
     {
         if( Mage::registry('layeredlanding_data') && Mage::registry('layeredlanding_data')->getId() ) {
-            return Mage::helper('layeredlanding')->__("Edit Landingpage '%s'", $this->htmlEscape(Mage::registry('layeredlanding_data')->getTitle()));
+            return Mage::helper('layeredlanding')->__("Edit Landingpage '%s'", $this->htmlEscape(Mage::registry('layeredlanding_data')->getPageTitle()));
         } else {
             return Mage::helper('layeredlanding')->__('Add Landingpage');
         }

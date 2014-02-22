@@ -16,7 +16,7 @@ class Hackathon_Layeredlanding_Model_Options_Categories extends Mage_Core_Model_
 
         foreach ($collection as $item) {
             $categories[] = array(
-                'label' => $item->getName(),
+                'label' => str_repeat('-', $item->getLevel()) . " {$item->getName()}",
                 'value' => $item->getId()
             );
         }
