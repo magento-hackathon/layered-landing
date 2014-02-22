@@ -42,6 +42,13 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
             'required'  => true,
             'name'      => 'page_description',
         ));
+       
+        $fieldset->addField('page_url', 'text', array(
+            'label'     => Mage::helper('layeredlanding')->__('Page URL'),
+            'class'     => 'required-entry',
+            'required'  => true,
+            'name'      => 'page_url',
+        ));
 		
 		$fieldset->addField('category_ids', 'multiselect', array(
 			'label'		=> Mage::helper('layeredlanding')->__('Categories'),

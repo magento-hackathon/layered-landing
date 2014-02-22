@@ -66,6 +66,7 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 					->setData('meta_description', $post_data['meta_description'])
 					->setData('page_title', $post_data['page_title'])
 					->setData('page_description', $post_data['page_description'])
+					->setData('page_url', $post_data['page_url'])
 					->setData('store_ids', $post_data['store_ids'])
 					->setData('category_ids', $post_data['category_ids']);
 				
