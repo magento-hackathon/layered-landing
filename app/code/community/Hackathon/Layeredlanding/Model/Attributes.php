@@ -17,9 +17,7 @@ class Hackathon_Layeredlanding_Model_Attributes extends Mage_Core_Model_Abstract
             $options = Mage::getResourceModel('eav/entity_attribute_option_collection');
             $options = $options->setAttributeFilter($attribute_id)->setStoreFilter($store_id)->toOptionArray();
 			
-			
-			
-            $html = '<select name="'.$input_name.'" class="input-select">
+            $html = '<select name="'.$input_name.'" class="input-select attribute-value" onchange="_estimate_product_count();">
 			<option value="">-- select --</option>';
             foreach ($options as $option)
             {
@@ -31,7 +29,7 @@ class Hackathon_Layeredlanding_Model_Attributes extends Mage_Core_Model_Abstract
         }
 		else
 		{
-			return '<input type="text" name="'.$input_name.'" class="input-text required-input" value="'.$option_id.'"/>';
+			return '<input type="text" name="'.$input_name.'" onchange="_estimate_product_count();" class="input-text required-input attribute-value" value="'.$option_id.'"/>';
 		}
 	}
 }
