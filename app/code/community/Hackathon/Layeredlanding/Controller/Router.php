@@ -43,15 +43,14 @@ class Hackathon_Layeredlanding_Controller_Router extends Mage_Core_Controller_Va
 
         $request->setRequestUri(substr($requestUri, 0, -1));
         $request->setPathInfo($pathInfo);
-
-        // dispatch action
-        $request->setDispatched(true);
-        $controllerInstance->dispatch('view');
-
         $request->setAlias(
             Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS,
             $identifier
         );
+
+        // dispatch action
+        $request->setDispatched(true);
+        $controllerInstance->dispatch('view');
 
         return true;
     }

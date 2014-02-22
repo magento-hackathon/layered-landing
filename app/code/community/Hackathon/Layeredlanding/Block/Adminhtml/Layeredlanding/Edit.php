@@ -10,8 +10,8 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit extends Mage_
         $this->_blockGroup = 'layeredlanding';
         $this->_controller = 'adminhtml_layeredlanding';
  
-        $this->_updateButton('save', 'label', Mage::helper('layeredlanding')->__('Save Store'));
-        $this->_updateButton('delete', 'label', Mage::helper('layeredlanding')->__('Delete Store'));
+        $this->_updateButton('save', 'label', Mage::helper('layeredlanding')->__('Save Landingpage'));
+        $this->_updateButton('delete', 'label', Mage::helper('layeredlanding')->__('Delete Landingpage'));
     }
  
     public function getHeaderText()
