@@ -49,19 +49,6 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Grid extends Mage_
             'width'     => '100px',
         ));
  
-        // $this->addColumn('status', array(
- 
-            // 'header'    => Mage::helper('layeredlanding')->__('Status'),
-            // 'align'     => 'left',
-            // 'width'     => '80px',
-            // 'index'     => 'status',
-            // 'type'      => 'options',
-            // 'options'   => array(
-                // 1 => 'Active',
-                // 0 => 'Inactive',
-            // ),
-        // ));
- 
         return parent::_prepareColumns();
     }
  
