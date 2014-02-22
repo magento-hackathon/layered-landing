@@ -59,7 +59,7 @@ function _update_value_select(elm)
 	
 	var attributeid = $(elm).value;
 	
-	new Ajax.Request('<?php echo Mage::getUrl("layeredlanding/index/ajaxValues/");?>?attributeid=' + attributeid, {
+	new Ajax.Request('<?php echo Mage::getUrl("adminhtml/layeredlanding/ajaxValues");?>?attributeid=' + attributeid, {
 		onSuccess: function(response) {
 			target.update(response.responseText);
 		}

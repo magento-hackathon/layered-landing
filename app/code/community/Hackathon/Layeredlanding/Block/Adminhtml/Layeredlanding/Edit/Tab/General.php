@@ -84,7 +84,6 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
 		$attributes->setRenderer(
 			$this->getLayout()->createBlock('layeredlanding/adminhtml_layeredlanding_edit_renderer_attributes')
 		);
-		
 
 		if (Mage::getSingleton('adminhtml/session')->getLayeredlandingData())
 		{
