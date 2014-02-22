@@ -1,8 +1,8 @@
 <?php
 
-class Hackathon_Layeredlanding_Model_Layout extends Mage_Core_Model_Abstract
+class Hackathon_Layeredlanding_Model_Design extends Mage_Catalog_Model_Design
 {
-    public function addLayoutHandle(Varien_Event_Observer $observer)
+    public function addLayoutHandleObserver(Varien_Event_Observer $observer)
     {
         $landingpage = Mage::registry('current_landingpage');
 		if (is_null($landingpage)) return $this; // no landingpage
@@ -30,5 +30,20 @@ class Hackathon_Layeredlanding_Model_Layout extends Mage_Core_Model_Abstract
 		// exit;
 		
 		return $this;
+    }
+	
+    protected function _extractSettings($object)
+    {
+        $landingpage = Mage::registry('current_landingpage');
+		
+		if (!is_null($landingpage) && $object && !Mage::registry('current_product')) // there is a landingpage, object is present and this is not a product page
+		{
+			$category_design = $object->getCustomDesignDate(); // categories custom design
+			$category_design .= "\r\n{$landingpage->getCustomLayoutUpdate()}"; 
+			
+			$object->setCustomDesignDate($category_design);
+		}
+		
+		return parent::_extractSettings($object); // process design in parent as usual
     }
 }
