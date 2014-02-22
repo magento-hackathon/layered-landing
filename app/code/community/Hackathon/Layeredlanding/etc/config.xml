@@ -71,22 +71,31 @@
         <events>
             <controller_front_init_routers>
                 <observers>
-                    <layeredurl>
+                    <layeredlanding>
                         <type>singleton</type>
                         <class>layeredlanding/observer</class>
                         <method>addLayeredRouter</method>
-                    </layeredurl>
+                    </layeredlanding>
                 </observers>
             </controller_front_init_routers>
             <controller_action_layout_load_before>
                 <observers>
-                    <layeredlanding_add_handle>
+                    <layeredlanding>
                         <type>singleton</type>
                         <class>layeredlanding/design</class>
                         <method>addLayoutHandleObserver</method>
-                    </layeredlanding_add_handle>
+                    </layeredlanding>
                 </observers>
             </controller_action_layout_load_before>
+            <core_block_abstract_prepare_layout_after>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>coreBlockAbstractPrepareLayoutAfter</method>
+                    </layeredlanding>
+                </observers>
+            </core_block_abstract_prepare_layout_after>
         </events>
     </global>
     <frontend>
