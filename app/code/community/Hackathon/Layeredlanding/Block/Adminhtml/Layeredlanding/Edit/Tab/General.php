@@ -89,6 +89,39 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_General e
             )
         );
 
+        $fieldset->addField(
+            'display_layered_navigation',
+            'select',
+            array(
+                'label' => Mage::helper('layeredlanding')->__('Display Layered Navigation'),
+                'class' => 'required-entry',
+                'required' => true,
+                'name' => 'display_layered_navigation',
+                'values' => Mage::getSingleton('layeredlanding/options_boolean')->toOptionArray(),
+            )
+        );
+
+        $fieldset->addField(
+            'custom_layout_template',
+            'select',
+            array(
+                'label' => Mage::helper('layeredlanding')->__('Page Layout'),
+                'required' => false,
+                'name' => 'custom_layout_template',
+                'values' => Mage::getSingleton('layeredlanding/options_layout')->toOptionArray(),
+            )
+        );
+
+        $fieldset->addField(
+            'custom_layout_update',
+            'textarea',
+            array(
+                'label' => Mage::helper('layeredlanding')->__('Custom Layout Update'),
+                'required' => false,
+                'name' => 'custom_layout_update',
+            )
+        );
+
         /**
          * Check is single store mode
          */

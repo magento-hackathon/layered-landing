@@ -18,10 +18,17 @@ class Hackathon_Layeredlanding_Model_Layeredlanding extends Mage_Core_Model_Abst
     public function loadByUrl($url)
     {
         $collection = $this->getCollection()
+            ->addFieldToSelect('layeredlanding_id')
+            ->addFieldToSelect('store_ids')
             ->addFieldToFilter('page_url', array('eq' => $url));
 
-        if ($collection->getSize()) {
-            $this->load($collection->getFirstItem()->getId());
+        if ($collection->getSize()) 
+		{
+			$store_ids = explode(',', $collection->getFirstItem()->getStoreIds());
+			if (in_array(Mage::app()->getStore()->getId(), $store_ids) || in_array('0', $store_ids)) // check if the item applies to the store or to system level
+			{
+				$this->load($collection->getFirstItem()->getId());
+			}
         }
 
         return $this;
