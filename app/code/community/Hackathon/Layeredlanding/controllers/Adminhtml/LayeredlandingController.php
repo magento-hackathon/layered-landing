@@ -163,7 +163,7 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
         $attribute_id = (int)$request->getParam('attributeid', false);
         $store_id = $request->getParam('storeid', 0);
 		
-		echo Mage::getModel('layeredlanding/attributes')->getGridOptionsHtml($attribute_id, $store_id);
+		echo Mage::getModel('layeredlanding/attributes')->getGridOptionsHtml($attribute_id, $store_id, 0, $input_name);
     }
 
 }
