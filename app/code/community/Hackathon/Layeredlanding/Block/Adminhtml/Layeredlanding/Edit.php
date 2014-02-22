@@ -12,6 +12,22 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit extends Mage_
  
         $this->_updateButton('save', 'label', Mage::helper('layeredlanding')->__('Save Landingpage'));
         $this->_updateButton('delete', 'label', Mage::helper('layeredlanding')->__('Delete Landingpage'));
+
+        $this->_addButton(
+            'saveandcontinue',
+            array(
+                'label' => Mage::helper('layeredlanding')->__('Save And Continue Edit'),
+                'onclick' => 'saveAndContinueEdit()',
+                'class' => 'save',
+            ),
+            -100
+        );
+
+        $this->_formScripts[] = "
+            function saveAndContinueEdit(){
+                editForm.submit($('edit_form').action+'back/edit/');
+            }
+        ";
     }
  
     public function getHeaderText()

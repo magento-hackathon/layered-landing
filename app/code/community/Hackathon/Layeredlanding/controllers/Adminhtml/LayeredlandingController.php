@@ -108,6 +108,10 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('layeredlanding')->__('Landingpage was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setLayeredlandingData(false);
 
+                if ($this->getRequest()->getParam("back")) {
+                    $this->_redirect("*/*/edit", array("id" => $model->getId()));
+                    return;
+                }
 				$this->_redirect('*/*/');
 				return;
 			} catch (Exception $e) {
