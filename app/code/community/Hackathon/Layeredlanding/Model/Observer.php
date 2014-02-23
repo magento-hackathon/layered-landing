@@ -9,6 +9,16 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
         $router = new Hackathon_Layeredlanding_Controller_Router();
         $front->addRouter('hackathon_layeredlanding', $router);
     }
+	
+	public function setCategoryData($observer)
+	{
+		$landingpage = Mage::registry('current_landingpage');
+		if (is_null($landingpage)) return $this; // no landingpage available, return
+		
+		$category = $observer->getCategory();
+		$category->setData('name', $landingpage->getData('page_title'));
+		$category->setData('description', $landingpage->getData('page_description'));
+	}
 
     public function coreBlockAbstractPrepareLayoutAfter($observer)
     {

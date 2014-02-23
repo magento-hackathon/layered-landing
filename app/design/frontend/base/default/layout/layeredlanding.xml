@@ -11,9 +11,4 @@
             <block type="layeredlanding/topnav" name="layered-landing-nav" as="layered-landing-nav" />
         </reference>
     </default>
-    <layeredlanding_page>
-        <reference name="content">
-            <block type="layeredlanding/content" name="layeredlanding.content" before="-" template="layeredlanding/content.phtml"/>
-        </reference>
-    </layeredlanding_page>
 </layout>

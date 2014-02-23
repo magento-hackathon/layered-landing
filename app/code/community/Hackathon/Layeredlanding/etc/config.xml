@@ -120,6 +120,17 @@
 				</layeredlanding>
 			</updates>
 		</layout>
+        <events>
+            <catalog_category_load_after>
+                <observers>
+                    <layeredlanding_categorydata>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>setCategoryData</method>
+                    </layeredlanding_categorydata>
+                </observers>
+            </catalog_category_load_after>
+		</events>
     </frontend>
     <admin>
         <routers>
