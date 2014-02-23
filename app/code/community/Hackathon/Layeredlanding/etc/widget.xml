@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<widgets>
+    <layeredlanding_link type="layeredlanding/widget_link">
+        <name>Layered landingpage link</name>
+        <description type="desc">Creates a dynamic link to a layered landing page</description>
+		
+        <js>mage/adminhtml/first.js,mage/adminhtml/second.js</js>
+		
+		<parameters>
+            <landingpage translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Landingpage</label>
+                <type>select</type>
+                <source_model>layeredlanding/options_landingpages</source_model>
+            </landingpage>
+            <class translate="label">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Link class</label>
+                <type>text</type>
+            </class>
+        </parameters>
+    </layeredlanding_link>
+</widgets>
