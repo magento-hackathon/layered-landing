@@ -18,5 +18,3 @@ Sitemap settings can be changed under `System > Configuration > Google Sitemap >
 
 ## Todo
 - CSV import for landingpages
-- Validation for attribute selection in backend
-- Allow for multiselect elements
