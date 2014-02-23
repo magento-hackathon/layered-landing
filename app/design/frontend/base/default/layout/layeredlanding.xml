@@ -1,4 +1,8 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    
+    <layeredlanding_page>
+        <reference name="left">
+            <block type="layeredlanding/leftnav" name="layeredlanding.leftnav" after="-" template="layeredlanding/leftnav.phtml"/>
+        </reference>
+    </layeredlanding_page>
 </layout>
