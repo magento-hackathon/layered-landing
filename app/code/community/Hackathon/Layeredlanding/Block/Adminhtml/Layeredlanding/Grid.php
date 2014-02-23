@@ -35,18 +35,21 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Grid extends Mage_
             'index'     => 'page_title',
         ));
  
-        // $this->addColumn('status', array(
+        $this->addColumn('category_ids', array(
+            'header'    => Mage::helper('layeredlanding')->__('Categories'),
+            'align'     => 'left',
+            'index'     => 'category_ids',
+            'width'     => '200px',
+			'renderer'  => 'Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Renderers_Categoryids',
+        ));
  
-            // 'header'    => Mage::helper('layeredlanding')->__('Status'),
-            // 'align'     => 'left',
-            // 'width'     => '80px',
-            // 'index'     => 'status',
-            // 'type'      => 'options',
-            // 'options'   => array(
-                // 1 => 'Active',
-                // 0 => 'Inactive',
-            // ),
-        // ));
+        $this->addColumn('store_ids', array(
+            'header'    => Mage::helper('layeredlanding')->__('Stores'),
+            'align'     => 'left',
+            'index'     => 'store_ids',
+            'width'     => '200px',
+			'renderer'  => 'Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Renderers_Storeids',
+        ));
  
         return parent::_prepareColumns();
     }

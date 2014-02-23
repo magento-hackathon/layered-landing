@@ -1,0 +1,20 @@
+language: php
+php:
+  - 5.3
+  - 5.4
+env:
+  - MAGE=1.7.0.2
+  - MAGE=1.6.2.0
+  - MAGE=1.5.1.0
+before_install:
+  # Magento
+  - mkdir test/
+  - composer install --dev
+before_script:
+  - CURR_DIR=$(pwd)
+  - bin/mage-ci install test $MAGE magento_test -c -t -r http://mage-ci.ecomdev.org
+  - bin/mage-ci install-module test $CURR_DIR
+  - git clone https://github.com/EcomDev/EcomDev_PHPUnit.git -b dev ./phpunit/
+  - bin/mage-ci install-module $CURR_DIR/test $CURR_DIR/phpunit/
+script:
+  - bin/mage-ci phpunit test

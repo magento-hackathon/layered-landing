@@ -12,7 +12,7 @@ $_counter = 0;
 <tr>
     <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
     <td colspan="10" class="grid hours">
-		<table id="attribute-options-table" class="data border layeredlanding-attributematch" cellspacing="0" cellpadding="0"><tbody>
+		<table id="attribute-options-table" class="data border layeredlanding-attributematch" cellspacing="0" cellpadding="0" style="width:500px;"><tbody>
 			<tr class="headings">
 				<th><?php echo $this->__('Attribute code') ?></th>
 				<th><?php echo $this->__('Value') ?></th>
@@ -21,7 +21,7 @@ $_counter = 0;
 <?php foreach ($collection as $_item): ?>
 <tr class="option-row layeredlanding-attributematch-row" id="row-<?php echo $_counter?>">
 	<td><select id="attribute_select_<?php echo $_counter ?>" name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][attribute]" class="input-select"><?php echo $this->getAttributeOptions((int)$_item->getData('attribute_id'));?></select></td>
-	<td><select id="value_select_<?php echo $_counter ?>" name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][value]" class="input-select"><?php echo $this->getValueOptions((int)$_item->getData('attribute_id'), $_item->getData('value'));?></select></td>
+	<td id="value_select_<?php echo $_counter ?>" rel="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][value]"><?php echo $this->getValueOptions((int)$_item->getData('attribute_id'), $_item->getData('value'), "{$_htmlName}[value][option_{$_counter}][value]");?></td>
 	<td class="a-left" id="delete_button_container_option_<?php echo $_counter ?>'">
 		<input name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][id]" value="<?php echo $_item->getId() ?>" type="hidden">
 		<input id="delete-row-<?php echo $_counter ?>" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_<?php echo $_counter ?>]" value=""/>
@@ -33,10 +33,11 @@ $_counter = 0;
 	endforeach;
 ?>
 </tbody></table>
+<div id="estimate-product-collection"></div>
 
 <script type="text/javascript">//<![CDATA[
 
-var _form_html_row = '<tr class="option-row layeredlanding-attributematch-row" id="row-{{id}}"><td><select id="attribute_select_{{id}}" onchange="_update_value_select(this);" name="<?php echo $_htmlName; ?>[value][option_{{id}}][attribute]" class="input-select"><?php echo $this->getAttributeOptions();?></select></td><td><select id="value_select_{{id}}" name="<?php echo $_htmlName; ?>[value][option_{{id}}][value]" class="input-select"></select></td><td class="a-left" id="delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="$(\'row-{{id}}\').style.display=\'none\'; $(\'delete-row-{{id}}\').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
+var _form_html_row = '<tr class="option-row layeredlanding-attributematch-row" id="row-{{id}}"><td><select id="attribute_select_{{id}}" onchange="_update_value_select(this);" name="<?php echo $_htmlName; ?>[value][option_{{id}}][attribute]" class="input-select"><?php echo $this->getAttributeOptions();?></select></td><td id="value_select_{{id}}" rel="<?php echo $_htmlName; ?>[value][option_{{id}}][value]"></td><td class="a-left" id="delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="$(\'row-{{id}}\').style.display=\'none\'; $(\'delete-row-{{id}}\').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
 
 var _layeredlanding_counter = <?php echo $_counter?>;
 
@@ -53,15 +54,50 @@ $('attribute-options-table').select('[id*="attribute_select_"]').each(function(e
 
 function _update_value_select(elm)
 {
-	console.log(elm);
 	var id = $(elm).readAttribute('id').replace('attribute_select_', '');
 	var target = $('value_select_' + id);
 	
 	var attributeid = $(elm).value;
+    var storeid = $('store_ids').value;
+	var inputname = target.readAttribute('rel');
 	
-	new Ajax.Request('<?php echo Mage::getUrl("adminhtml/layeredlanding/ajaxValues");?>?attributeid=' + attributeid, {
+	var querystring = $H({
+		attributeid: attributeid,
+		storeid: storeid,
+		inputname: inputname
+	}).toQueryString();
+	
+	new Ajax.Request('<?php echo Mage::getUrl("adminhtml/layeredlanding/ajaxValues");?>?' + querystring, {
 		onSuccess: function(response) {
 			target.update(response.responseText);
+		}
+	});
+}
+
+function _estimate_product_count()
+{
+	var queryarray = {};
+	
+	$('attribute-options-table').select('.option-row').each(function(elm){
+		var attribute = $(elm).select('[id*="attribute_select_"]').first().value;
+		var value = $(elm).select('.attribute-value').first().value;
+		queryarray[""+attribute] = value;
+	});
+	
+	 queryarray["category"] = $('category_ids').getValue();
+	 queryarray["store"] = '';
+	 $('store_ids').select('option[selected]').each(function(opt, i){
+		var optval = parseInt($(opt).readAttribute('value'));
+		if (optval == 0) return;
+		
+		queryarray["store"] += optval+','
+	 });
+	
+	var querystring = $H(queryarray).toQueryString();
+	
+	new Ajax.Request('<?php echo Mage::getUrl("adminhtml/layeredlanding/ajaxCountResult");?>?' + querystring, {
+		onSuccess: function(response) {
+			$('estimate-product-collection').update('<b>' + response.responseText + '</b>');
 		}
 	});
 }

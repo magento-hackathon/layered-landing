@@ -1,8 +1,18 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <catalog_category_layered>
-        <reference name="content">
-            <block type="layeredlanding/content" name="layeredlanding.content" before="-" template="layeredlanding/content.phtml"/>
+    <layeredlanding_page>
+        <reference name="head">
+            <block type="layeredlanding/canonical" name="layeredlanding.canonical" after="-" template="layeredlanding/canonical.phtml"/>
         </reference>
-    </catalog_category_layered>
+        <reference name="left">
+            <block type="layeredlanding/leftnav" name="layeredlanding.leftnav" after="-" template="layeredlanding/leftnav.phtml"/>
+        </reference>
+    </layeredlanding_page>
+    <default>
+        <reference name="catalog.topnav">
+            <action method="addCacheTag">
+                <value>TOPMENU</value>
+            </action>
+        </reference>
+    </default>
 </layout>

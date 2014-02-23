@@ -2,101 +2,30 @@
 <config>
     <modules>
         <Hackathon_Layeredlanding>
-            <version>0.2.0</version>
+            <version>0.4.0</version>
         </Hackathon_Layeredlanding>
     </modules>
-	<default>
-		<web>
-			<routers>
-				<hackathon_layeredlanding>
-					<area>frontend</area>
-					<class>Hackathon_Layeredlanding_Controller_Router</class>
-				</hackathon_layeredlanding>
-			</routers>
-		</web>
-	</default>
-    <frontend>
-        <routers>
-            <layeredlanding>
-                <use>hackathon_layeredlanding</use>
-                <args>
-                    <module>Hackathon_Layeredlanding</module>
-                    <frontName>layeredlanding</frontName>
-                </args>
-            </layeredlanding>
-        </routers>
-		<layout>
-			<updates>
-				<layeredlanding>
-					<file>layeredlanding.xml</file>
-				</layeredlanding>
-			</updates>
-		</layout>
-    </frontend>
-    <admin>
-        <routers>
-			<adminhtml>
-				<args>
-					<modules>
-						<layeredlanding before="Mage_Adminhtml">Hackathon_Layeredlanding_Adminhtml</layeredlanding>
-					</modules>
-				</args>
-			</adminhtml>
-        </routers>
-    </admin>
-    <adminhtml>
-        <menu>
-			<catalog>
-				<children>
-					<attributes>
-						<children>
-							<layeredlanding module="layeredlanding">
-								<title>Attribute landing pages</title>
-								<sort_order>99</sort_order>               
-								<action>adminhtml/layeredlanding</action>
-							</layeredlanding>
-						</children>
-					</attributes>
-				</children>
-			</catalog>
-        </menu>
-        <acl>
-            <resources>
-                <all>
-                    <title>Allow Everything</title>
-                </all>
-                <admin>
-                    <children>
-						<catalog>
-							<children>
-								<attributes>
-									<children>
-										<layeredlanding>
-											<title>Attribute landing pages</title>
-											<sort_order>99</sort_order>
-										</layeredlanding>
-									</children>
-								</attributes>
-							</children>
-						</catalog>
-					</children>
-				</admin>
-			</resources>
-        </acl>
-        <layout>
-            <updates>
-                <layeredlanding>
-                    <file>layeredlanding.xml</file>
-                </layeredlanding>
-            </updates>
-        </layout>
-    </adminhtml>   
     <global>
         <models>
             <layeredlanding>
                 <class>Hackathon_Layeredlanding_Model</class>
                 <resourceModel>layeredlanding_mysql4</resourceModel>
             </layeredlanding>
+            <sitemap>
+                <rewrite>
+                    <sitemap>Hackathon_Layeredlanding_Model_Sitemap</sitemap>
+                </rewrite>
+            </sitemap>
+            <catalog>
+                <rewrite>
+                    <design>Hackathon_Layeredlanding_Model_Design</design>
+                </rewrite>
+            </catalog>
+            <catalog>
+                <rewrite>
+                    <layer_filter_item>Hackathon_Layeredlanding_Model_Catalog_Layer_Filter_Item</layer_filter_item>
+                </rewrite>
+            </catalog>
             <layeredlanding_mysql4>
                 <class>Hackathon_Layeredlanding_Model_Mysql4</class>
                 <entities>
@@ -133,6 +62,11 @@
             <layeredlanding>
                 <class>Hackathon_Layeredlanding_Block</class>
             </layeredlanding>
+            <catalog>
+                <rewrite>
+                    <layer_state>Hackathon_Layeredlanding_Block_Layer_State</layer_state>
+                </rewrite>
+            </catalog>
         </blocks>
         <helpers>
             <layeredlanding>
@@ -142,13 +76,141 @@
         <events>
             <controller_front_init_routers>
                 <observers>
-                    <layeredurl>
+                    <layeredlanding>
                         <type>singleton</type>
                         <class>layeredlanding/observer</class>
                         <method>addLayeredRouter</method>
-                    </layeredurl>
+                    </layeredlanding>
                 </observers>
             </controller_front_init_routers>
+            <controller_action_layout_load_before>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/design</class>
+                        <method>addLayoutHandleObserver</method>
+                    </layeredlanding>
+                </observers>
+            </controller_action_layout_load_before>
+            <core_block_abstract_prepare_layout_after>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>coreBlockAbstractPrepareLayoutAfter</method>
+                    </layeredlanding>
+                </observers>
+            </core_block_abstract_prepare_layout_after>
         </events>
     </global>
+    <frontend>
+        <routers>
+            <layeredlanding>
+                <use>hackathon_layeredlanding</use>
+                <args>
+                    <module>Hackathon_Layeredlanding</module>
+                    <frontName>layeredlanding</frontName>
+                </args>
+            </layeredlanding>
+        </routers>
+        <layout>
+            <updates>
+                <layeredlanding>
+                    <file>layeredlanding.xml</file>
+                </layeredlanding>
+            </updates>
+        </layout>
+        <events>
+            <catalog_category_load_after>
+                <observers>
+                    <layeredlanding_categorydata>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>setCategoryData</method>
+                    </layeredlanding_categorydata>
+                </observers>
+            </catalog_category_load_after>
+            <page_block_html_topmenu_gethtml_before>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>pageBlockHtmlTopmenuGethtmlBefore</method>
+                    </layeredlanding>
+                </observers>
+            </page_block_html_topmenu_gethtml_before>
+            <catalog_controller_category_init_after>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>catalogControllerCategoryInitAfter</method>
+                    </layeredlanding>
+                </observers>
+            </catalog_controller_category_init_after>
+        </events>
+    </frontend>
+    <admin>
+        <routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<layeredlanding before="Mage_Adminhtml">Hackathon_Layeredlanding_Adminhtml</layeredlanding>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <events>
+            <layered_landing_save_before>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>layeredLandingSaveBefore</method>
+                    </layeredlanding>
+                </observers>
+            </layered_landing_save_before>
+            <layered_landing_save_after>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>layeredLandingSaveAfter</method>
+                    </layeredlanding>
+                </observers>
+            </layered_landing_save_after>
+        </events>
+        <layout>
+            <updates>
+                <layeredlanding>
+                    <file>layeredlanding.xml</file>
+                </layeredlanding>
+            </updates>
+        </layout>
+    </adminhtml>
+    <default>
+        <web>
+            <routers>
+                <hackathon_layeredlanding>
+                    <area>frontend</area>
+                    <class>Hackathon_Layeredlanding_Controller_Router</class>
+                </hackathon_layeredlanding>
+            </routers>
+        </web>
+        <sitemap>
+            <landing>
+                <priority>0.25</priority>
+                <changefreq>daily</changefreq>
+            </landing>
+		</sitemap>
+    </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <Hackathon_Layeredlanding />
+            </modules>
+        </suite>
+    </phpunit>
 </config>

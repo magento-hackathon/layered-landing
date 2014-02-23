@@ -22,15 +22,15 @@ class Hackathon_Layeredlanding_Controller_Router extends Mage_Core_Controller_Va
         }
 
         Mage::register('current_landingpage', $landingPage);
-
+		
+		Mage::app()->getStore()->setConfig(Mage_Catalog_Helper_Category::XML_PATH_USE_CATEGORY_CANONICAL_TAG, 0); // disable canonical tag
+		
         // if successfully gained url parameters, use them and dispatch ActionController action
         $request->setRouteName('catalog')
             ->setModuleName('catalog')
             ->setControllerName('category')
             ->setActionName('view')
             ->setParam('id', $landingPage->getCategoryIds());
-        $pathInfo = 'catalog/category/view/id/' . $landingPage->getCategoryIds();
-        $requestUri = '/' . $pathInfo . '?';
 
         /** @var $attribute Hackathon_Layeredlanding_Model_Attributes */
         foreach ($landingPage->getAttributes() as $attribute) {
@@ -41,17 +41,14 @@ class Hackathon_Layeredlanding_Controller_Router extends Mage_Core_Controller_Va
         $controllerClassName = $this->_validateControllerClassName('Mage_Catalog', 'category');
         $controllerInstance = Mage::getControllerInstance($controllerClassName, $request, $this->getFront()->getResponse());
 
-        $request->setRequestUri(substr($requestUri, 0, -1));
-        $request->setPathInfo($pathInfo);
-
-        // dispatch action
-        $request->setDispatched(true);
-        $controllerInstance->dispatch('view');
-
         $request->setAlias(
             Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS,
             $identifier
         );
+
+        // dispatch action
+        $request->setDispatched(true);
+        $controllerInstance->dispatch('view');
 
         return true;
     }

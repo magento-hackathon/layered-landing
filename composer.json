@@ -1,0 +1,52 @@
+{
+    "name": "magento-hackathon/layered-landing",
+    "license": "OSL-3.0",
+    "type": "magento-module",
+    "description": "Create landing pages based on a combination of category and layered navigation attribute filters.",
+    "homepage": "https://github.com/magento-hackathon",
+    "authors": [
+        {
+            "name": "Matthias Kleine",
+            "email": "development@mkleine.de",
+            "homepage": "http://mkleine.de",
+            "role": "Developer"
+        },
+        {
+            "name": "Sander Mangel",
+            "email": "sander@sandermangel.nl",
+            "homepage": "http://www.sandermangel.nl/",
+            "role": "Developer"
+        }
+    ],
+    "keywords": [
+        "magento",
+        "extension",
+        "module",
+        "hackathon"
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "ivanchepurnyi/ecomdev_phpunit": "dev-dev",
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "require-dev": {
+        "ecomdev/mage-ci": "dev-master",
+        "phpunit/phpunit": "3.7.*"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "repositories":[
+        {
+            "url": "https://github.com/EcomDev/EcomDev_PHPUnit",
+            "type": "git"
+        },
+        {
+            "type": "composer",
+            "url": "http://packages.firegento.com"
+        }
+    ],
+    "extra":{
+        "magento-root-dir": "test/"
+    }
+}

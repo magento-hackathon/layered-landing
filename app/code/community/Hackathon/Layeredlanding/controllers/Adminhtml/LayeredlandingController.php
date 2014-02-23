@@ -55,8 +55,7 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 			try {
 				$post_data = $this->getRequest()->getPost();
 				
-				$post_data['store_ids'] 	= implode(',', $post_data['store_ids']);
-				$post_data['category_ids'] 	= implode(',', $post_data['category_ids']);
+				$post_data['store_ids'] = implode(',', $post_data['store_ids']);
 				
 				$model = Mage::getModel('layeredlanding/layeredlanding');
 				
@@ -67,9 +66,13 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 					->setData('page_title', $post_data['page_title'])
 					->setData('page_description', $post_data['page_description'])
 					->setData('page_url', $post_data['page_url'])
+					->setData('display_layered_navigation', $post_data['display_layered_navigation'])
+                    ->setData('display_in_top_navigation', $post_data['display_in_top_navigation'])
+					->setData('custom_layout_template', $post_data['custom_layout_template'])
+					->setData('custom_layout_update', $post_data['custom_layout_update'])
 					->setData('store_ids', $post_data['store_ids'])
-					->setData('category_ids', $post_data['category_ids']);
-				
+					->setData('category_ids', (int)$post_data['category_ids']);
+
 				$model->save();
 				
 				
@@ -106,6 +109,10 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('layeredlanding')->__('Landingpage was successfully saved'));
 				Mage::getSingleton('adminhtml/session')->setLayeredlandingData(false);
 
+                if ($this->getRequest()->getParam("back")) {
+                    $this->_redirect("*/*/edit", array("id" => $model->getId()));
+                    return;
+                }
 				$this->_redirect('*/*/');
 				return;
 			} catch (Exception $e) {
@@ -152,18 +159,55 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 
     public function ajaxValuesAction()
     {
-        $attribute_id = (int)Mage::app()->getRequest()->getParam('attributeid');
+        $request = Mage::app()->getRequest();
 
-        $options = Mage::getResourceModel('eav/entity_attribute_option_collection');
-        $options = $options->setAttributeFilter($attribute_id)->setStoreFilter(0)->toOptionArray();
+        $attribute_id = (int)$request->getParam('attributeid', false);
+        $store_id = $request->getParam('storeid', 0);
+        $input_name = $request->getParam('inputname');
+		
+		echo Mage::getModel('layeredlanding/attributes')->getGridOptionsHtml($attribute_id, $store_id, 0, $input_name);
+    }
 
-        $html = '<option value="">-- select --</option>';
-        foreach ($options as $option)
-        {
-            $html .= '<option value="' . $option['value'] . '">' . $option['label'] . '</option>';
-        }
-
-        echo $html;
+    public function ajaxCountResultAction()
+    {
+        $request = Mage::app()->getRequest()->getParams();
+		
+		$category = $request['category'];
+		$stores = explode(',', trim($request['store'], ','));
+		
+		unset($request['isAjax'], $request['form_key'], $request['category'], $request['store']);
+		
+		foreach ($stores as $store)
+		{
+			$collection = Mage::getModel('catalog/product')->getCollection();
+			
+			// get not only this cat, but also it's childrens products
+			$categories = Mage::getModel('catalog/category')->load((int)$category)->getAllChildren(true);
+			$collection->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id=entity_id', null, 'left');
+			$collection->addAttributeToFilter('category_id', array('in' => $categories));
+						
+			$collection->setStoreId((int)$store);
+			
+			foreach ($request as $attribute_id => $value)
+			{
+				$attribute_code = Mage::helper('layeredlanding')->attributeIdToCode($attribute_id);
+				if ($attribute_code == 'price')
+				{
+					$price_range = explode('-', $value);
+					$collection->addFieldToFilter('price', array('from'=>$price_range[0],'to'=>$price_range[1]));
+				}
+				else
+				{
+					$collection->addAttributeToFilter($attribute_code, $value);
+				}
+			}
+			
+			Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
+			
+			//var_dump((string)$collection->getSelect());exit;
+			
+			echo Mage::helper('layeredlanding')->__('Estimated product count for store \'%s\' is %d', Mage::app()->getStore($store)->getName(), $collection->getSize()) . "<br/>";
+		}
     }
 
 }
