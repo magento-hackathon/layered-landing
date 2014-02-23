@@ -99,7 +99,7 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
                 'is_landingpage' => true
             );
 
-            $newNode = new Varien_Data_Tree_Node($newNodeData, 'test', new Varien_Data_Tree);
+            $newNode = new Varien_Data_Tree_Node($newNodeData, 'id', new Varien_Data_Tree);
             $menu->addChild($newNode);
 
             $hasActiveEntry = $hasActiveEntry || $isActive;

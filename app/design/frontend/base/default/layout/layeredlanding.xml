@@ -1,4 +1,10 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    
+    <default>
+        <reference name="catalog.topnav">
+            <action method="addCacheTag">
+                <value>TOPMENU</value>
+            </action>
+        </reference>
+    </default>
 </layout>
