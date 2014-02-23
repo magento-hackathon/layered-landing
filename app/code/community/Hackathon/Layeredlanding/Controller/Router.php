@@ -22,7 +22,9 @@ class Hackathon_Layeredlanding_Controller_Router extends Mage_Core_Controller_Va
         }
 
         Mage::register('current_landingpage', $landingPage);
-
+		
+		Mage::app()->getStore()->setConfig(Mage_Catalog_Helper_Category::XML_PATH_USE_CATEGORY_CANONICAL_TAG, 0); // disable canonical tag
+		
         // if successfully gained url parameters, use them and dispatch ActionController action
         $request->setRouteName('catalog')
             ->setModuleName('catalog')
