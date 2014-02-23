@@ -18,3 +18,4 @@ Sitemap settings can be changed under `System > Configuration > Google Sitemap >
 
 ## Todo
 - CSV import for landingpages
+- Try to minimalize overwrites
