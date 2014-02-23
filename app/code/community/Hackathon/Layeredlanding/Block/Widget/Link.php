@@ -23,7 +23,7 @@ class Hackathon_Layeredlanding_Block_Widget_Link extends Mage_Core_Block_Abstrac
 		if (!in_array(Mage::app()->getStore()->getId(), $stores)) return ''; // landingpage not present on this store
 		
 		// create link
-		$landingpage_url 	= Mage::getBaseUrl() . DS . $landingpage->getData('page_url');
+		$landingpage_url 	= Mage::getBaseUrl() . trim($landingpage->getData('page_url'), '/');
 		$landingpage_name 	= $landingpage->getData('page_title');
 		$landingpage_class	= (strlen($this->getData('class'))) ? ' class="'.$this->getData('class').'"' : '' ;
 		
