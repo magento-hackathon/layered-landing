@@ -7,7 +7,7 @@ The landing pages will be based on the layered navigation functionality in the f
 > Extension allows for custom meta data, page title and description replacing the category data, design updates and adding landingpages to the Magento topmenu
 
 ## Requirements
-Magento 1.8.0.0
+Magento 1.8.0.0 (But will probably work on 1.6 and 1.7 as well)
 
 ## Settings
 ### Adding pages
