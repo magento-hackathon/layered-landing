@@ -21,7 +21,7 @@ $_counter = 0;
 <?php foreach ($collection as $_item): ?>
 <tr class="option-row layeredlanding-attributematch-row" id="row-<?php echo $_counter?>">
 	<td><select id="attribute_select_<?php echo $_counter ?>" name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][attribute]" class="input-select"><?php echo $this->getAttributeOptions((int)$_item->getData('attribute_id'));?></select></td>
-	<td id="value_select_<?php echo $_counter ?>"><?php echo $this->getValueOptions((int)$_item->getData('attribute_id'), $_item->getData('value'), "{$_htmlName}[value][option_{$_counter}][value]");?></td>
+	<td id="value_select_<?php echo $_counter ?>" rel="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][value]"><?php echo $this->getValueOptions((int)$_item->getData('attribute_id'), $_item->getData('value'), "{$_htmlName}[value][option_{$_counter}][value]");?></td>
 	<td class="a-left" id="delete_button_container_option_<?php echo $_counter ?>'">
 		<input name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][id]" value="<?php echo $_item->getId() ?>" type="hidden">
 		<input id="delete-row-<?php echo $_counter ?>" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_<?php echo $_counter ?>]" value=""/>
@@ -37,7 +37,7 @@ $_counter = 0;
 
 <script type="text/javascript">//<![CDATA[
 
-var _form_html_row = '<tr class="option-row layeredlanding-attributematch-row" id="row-{{id}}"><td><select id="attribute_select_{{id}}" onchange="_update_value_select(this);" name="<?php echo $_htmlName; ?>[value][option_{{id}}][attribute]" class="input-select"><?php echo $this->getAttributeOptions();?></select></td><td id="value_select_{{id}}" input-name="<?php echo $_htmlName; ?>[value][option_{{id}}][value]"></td><td class="a-left" id="delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="$(\'row-{{id}}\').style.display=\'none\'; $(\'delete-row-{{id}}\').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
+var _form_html_row = '<tr class="option-row layeredlanding-attributematch-row" id="row-{{id}}"><td><select id="attribute_select_{{id}}" onchange="_update_value_select(this);" name="<?php echo $_htmlName; ?>[value][option_{{id}}][attribute]" class="input-select"><?php echo $this->getAttributeOptions();?></select></td><td id="value_select_{{id}}" rel="<?php echo $_htmlName; ?>[value][option_{{id}}][value]"></td><td class="a-left" id="delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="$(\'row-{{id}}\').style.display=\'none\'; $(\'delete-row-{{id}}\').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
 
 var _layeredlanding_counter = <?php echo $_counter?>;
 
@@ -59,7 +59,7 @@ function _update_value_select(elm)
 	
 	var attributeid = $(elm).value;
     var storeid = $('store_ids').value;
-	var inputname = target.readAttribute('input-name');
+	var inputname = target.readAttribute('rel');
 	
 	var querystring = $H({
 		attributeid: attributeid,

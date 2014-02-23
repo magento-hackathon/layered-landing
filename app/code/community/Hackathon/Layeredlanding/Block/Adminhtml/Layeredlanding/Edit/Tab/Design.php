@@ -35,6 +35,7 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_Design ex
                 'required' => true,
                 'name' => 'display_in_top_navigation',
                 'values' => Mage::getSingleton('layeredlanding/options_boolean')->toOptionArray(),
+                'value' => '0',
             )
         );
 
