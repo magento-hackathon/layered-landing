@@ -62,6 +62,54 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
     public function layeredLandingSaveAfter($observer)
     {
         $cache = Mage::app()->getCache();
-        $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('TOPNAV'));
+        $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('TOPMENU'));
+    }
+
+    public function pageBlockHtmlTopmenuGethtmlBefore($observer)
+    {
+        /** @var $menu Varien_Data_Tree_Node */
+        $menu = $observer->getMenu();
+
+        $collection = Mage::getModel('layeredlanding/layeredlanding')
+            ->getCollection()
+            ->addFieldToFilter('display_in_top_navigation', 1);
+
+        $hasActiveEntry = false;
+
+        /** @var $landingpage Hackathon_Layeredlanding_Model_Layeredlanding */
+        foreach ($collection as $landingpage)
+        {
+            $isActive = Mage::app()->getRequest()->getAlias(Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS) == $landingpage->getPageUrl();
+
+            $newNodeData = array(
+                'id' => 'layered-landing-'.$landingpage->getId(),
+                'name' => $landingpage->getPageTitle(),
+                'url' => $landingpage->getUrl(),
+                'is_active' => $isActive,
+                'is_landingpage' => true
+            );
+
+            $newNode = new Varien_Data_Tree_Node($newNodeData, 'test', new Varien_Data_Tree);
+            $menu->addChild($newNode);
+
+            $hasActiveEntry = $hasActiveEntry || $isActive;
+        }
+
+        if ($hasActiveEntry) {
+            foreach ($menu->getChildren() as $child) {
+                if (!$child->getIsLandingpage()) {
+                    $child->setIsActive(false);
+                }
+            }
+        }
+    }
+
+    public function catalogControllerCategoryInitAfter($observer)
+    {
+        $landingPage = Mage::registry('current_landingpage');
+        if ($landingPage) {
+            Mage::unregister('current_entity_key');
+            Mage::register('current_entity_key', 'landingpage-'.$landingPage->getId());
+        }
     }
 }

@@ -1,16 +1,5 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <default>
-        <reference name="catalog.topnav">
-            <action method="setTemplate">
-                <value>layeredlanding/topnav.phtml</value>
-            </action>
-            <action method="addCacheTag">
-                <value>TOPNAV</value>
-            </action>
-            <block type="layeredlanding/topnav" name="layered-landing-nav" as="layered-landing-nav" />
-        </reference>
-    </default>
     <layeredlanding_page>
         <reference name="content">
             <block type="layeredlanding/content" name="layeredlanding.content" before="-" template="layeredlanding/content.phtml"/>

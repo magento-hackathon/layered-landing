@@ -113,13 +113,33 @@
                 </args>
             </layeredlanding>
         </routers>
-		<layout>
-			<updates>
-				<layeredlanding>
-					<file>layeredlanding.xml</file>
-				</layeredlanding>
-			</updates>
-		</layout>
+        <layout>
+            <updates>
+                <layeredlanding>
+                    <file>layeredlanding.xml</file>
+                </layeredlanding>
+            </updates>
+        </layout>
+        <events>
+            <page_block_html_topmenu_gethtml_before>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>pageBlockHtmlTopmenuGethtmlBefore</method>
+                    </layeredlanding>
+                </observers>
+            </page_block_html_topmenu_gethtml_before>
+            <catalog_controller_category_init_after>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>catalogControllerCategoryInitAfter</method>
+                    </layeredlanding>
+                </observers>
+            </catalog_controller_category_init_after>
+        </events>
     </frontend>
     <admin>
         <routers>
