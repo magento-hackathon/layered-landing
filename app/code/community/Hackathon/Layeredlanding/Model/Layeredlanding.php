@@ -39,4 +39,9 @@ class Hackathon_Layeredlanding_Model_Layeredlanding extends Mage_Core_Model_Abst
 
         return $this;
     }
+
+    public function getUrl()
+    {
+        return Mage::getUrl().$this->getPageUrl();
+    }
 }

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Hackathon_Layeredlanding>
-            <version>0.3.0</version>
+            <version>0.4.0</version>
         </Hackathon_Layeredlanding>
     </modules>
     <global>
@@ -143,6 +143,15 @@
                     </layeredlanding>
                 </observers>
             </layered_landing_save_before>
+            <layered_landing_save_after>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>layeredLandingSaveAfter</method>
+                    </layeredlanding>
+                </observers>
+            </layered_landing_save_after>
         </events>
         <layout>
             <updates>

@@ -27,6 +27,18 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_Design ex
         );
 
         $fieldset->addField(
+            'display_in_top_navigation',
+            'select',
+            array(
+                'label' => Mage::helper('layeredlanding')->__('Display in Top Navigation'),
+                'class' => 'required-entry',
+                'required' => true,
+                'name' => 'display_in_top_navigation',
+                'values' => Mage::getSingleton('layeredlanding/options_boolean')->toOptionArray(),
+            )
+        );
+
+        $fieldset->addField(
             'custom_layout_template',
             'select',
             array(

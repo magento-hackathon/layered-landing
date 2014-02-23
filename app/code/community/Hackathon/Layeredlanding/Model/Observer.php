@@ -58,4 +58,10 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
             }
         }
     }
+
+    public function layeredLandingSaveAfter($observer)
+    {
+        $cache = Mage::app()->getCache();
+        $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('TOPNAV'));
+    }
 }
