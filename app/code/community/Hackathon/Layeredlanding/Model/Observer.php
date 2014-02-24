@@ -43,6 +43,19 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
                 }
             }
         }
+        else if ($block instanceof Mage_Catalog_Block_Breadcrumbs) {
+
+            /** @var $landingpage Hackathon_Layeredlanding_Model_Layeredlanding */
+            $landingpage = Mage::registry('current_landingpage');
+
+            /** @var $breadcrumbsBlock Mage_Page_Block_Html_Breadcrumbs */
+            if (($breadcrumbsBlock = $block->getLayout()->getBlock('breadcrumbs')) && $landingpage) {
+                $breadcrumbsBlock->addCrumb($landingpage->getPageTitle(), array(
+                    'label' => $landingpage->getPageTitle()
+                ));
+            }
+
+        }
     }
 
     public function layeredLandingSaveBefore($observer)
