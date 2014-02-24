@@ -205,6 +205,11 @@
                 <changefreq>daily</changefreq>
             </landing>
 		</sitemap>
+        <catalog>
+            <seo>
+                <layeredlanding_canonical_tag>1</layeredlanding_canonical_tag>
+            </seo>
+        </catalog>
     </default>
     <phpunit>
         <suite>
