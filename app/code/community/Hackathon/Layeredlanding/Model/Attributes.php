@@ -12,7 +12,7 @@ class Hackathon_Layeredlanding_Model_Attributes extends Mage_Core_Model_Abstract
 	{
 		$attribute = Mage::getModel('eav/entity_attribute')->load((int)$attribute_id);
 		
-        if ($attribute->getId() && $attribute->getData('frontend_input') == 'select') 
+        if ($attribute->getId() && in_array($attribute->getData('frontend_input'), array('select','multiselect')))
 		{
             $options = Mage::getResourceModel('eav/entity_attribute_option_collection');
             $options = $options->setAttributeFilter($attribute_id)->setStoreFilter($store_id)->toOptionArray();
