@@ -10,6 +10,11 @@
                             <sort_order>99</sort_order>
                             <action>adminhtml/layeredlanding</action>
                         </layeredlanding>
+                        <layeredlandingimport module="layeredlanding">
+                            <title>Attribute landing pages import tool</title>
+                            <sort_order>100</sort_order>
+                            <action>adminhtml/layeredimport</action>
+                        </layeredlandingimport>
                     </children>
                 </attributes>
             </children>
@@ -30,6 +35,10 @@
                                         <title>Attribute landing pages</title>
                                         <sort_order>99</sort_order>
                                     </layeredlanding>
+                                    <layeredlandingimport>
+                                        <title>Attribute landing pages import tool</title>
+                                        <sort_order>100</sort_order>
+                                    </layeredlandingimport>
                                 </children>
                             </attributes>
                         </children>
