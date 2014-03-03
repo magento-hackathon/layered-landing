@@ -93,8 +93,19 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 							$attributes_object->delete();
 							continue;
 						}
-						
-						if (!$delete)
+
+                        // Check if the attribute and value values are set
+                        $can_save = true;
+                        if (0 == (int)$attributes_object->getId() && (empty($object_data['value']) || empty($object_data['attribute']))) // new item but no values
+                        {
+                            $can_save = false;
+                        }
+                        elseif (0 < (int)$attributes_object->getId() && empty($object_data['value'])) // existing item but no value
+                        {
+                            $can_save = false;
+                        }
+
+						if (!$delete && $can_save) // save if not deleted and data checks out
 						{
 							$attributes_object->setData('layeredlanding_id', $attributelanding_id);
 							$attributes_object->setData('attribute_id', $object_data['attribute']);
