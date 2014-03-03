@@ -95,7 +95,8 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
 
         $collection = Mage::getModel('layeredlanding/layeredlanding')
             ->getCollection()
-            ->addFieldToFilter('display_in_top_navigation', 1);
+            ->addFieldToFilter('display_in_top_navigation', 1)
+            ->addStoreFilter();
 
         $hasActiveEntry = false;
 

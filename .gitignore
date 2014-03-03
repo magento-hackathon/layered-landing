@@ -1716,3 +1716,4 @@ app/etc/modules/Aoe_Profiler.xml
 app/code/community/Aoe/
 app/code/community/Varien/
 app/code/community/Zend/
+.idea/

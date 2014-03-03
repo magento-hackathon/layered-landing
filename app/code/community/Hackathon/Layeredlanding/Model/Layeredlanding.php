@@ -44,11 +44,4 @@ class Hackathon_Layeredlanding_Model_Layeredlanding extends Mage_Core_Model_Abst
     {
         return Mage::getUrl().$this->getPageUrl();
     }
-	
-	public function addStoreFilter(&$collection, $store_id = null)
-	{
-		if (is_null($store_id)) $store_id = Mage::app()->getStore()->getId();
-		
-		$select = $collection->getSelect()->where(" (CONCAT(',', `store_ids`, ',') LIKE '%,{$store_id},%' OR `store_ids`=0)");
-	}
 }
