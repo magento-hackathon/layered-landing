@@ -7,7 +7,7 @@ The landing pages will be based on the layered navigation functionality in the f
 > Extension allows for custom meta data, page title and description replacing the category data, design updates and adding landingpages to the Magento topmenu
 
 ## Requirements
-Magento 1.8.0.0 (But will probably work on 1.6 and 1.7 as well)
+Magento 1.8.x (But will probably work on 1.6 and 1.7 as well)
 
 ## Settings
 ### Adding pages
@@ -19,3 +19,20 @@ Sitemap settings can be changed under `System > Configuration > Google Sitemap >
 ## Todo
 - CSV import for landingpages
 - Try to minimalize overwrites
+
+
+## Screenshots
+### Admin grid
+![Admin grid](http://i.imgur.com/uytojcK.png)
+
+### Admin item content tab
+![Admin item content tab](http://i.imgur.com/RVmiIG2.png)
+
+### Admin item conditions tab
+![Admin item conditions tab](http://i.imgur.com/P0KP8T0.png)
+
+### Admin item design tab
+![Admin item design tab](http://i.imgur.com/vFO1Xfd.png)
+
+### Frontend
+![Frontend](http://i.imgur.com/LF4ZTPL.png)
