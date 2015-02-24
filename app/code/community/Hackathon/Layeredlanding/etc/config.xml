@@ -162,6 +162,15 @@
         </routers>
     </admin>
     <adminhtml>
+        <translate>
+            <modules>
+                <layeredlanding>
+                    <files>
+                        <default>Hackathon_Layeredlanding.csv</default>
+                    </files>
+                </layeredlanding>
+            </modules>
+        </translate>
         <events>
             <layered_landing_save_before>
                 <observers>
