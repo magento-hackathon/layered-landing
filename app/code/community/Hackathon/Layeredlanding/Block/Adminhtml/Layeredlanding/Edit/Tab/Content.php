@@ -45,6 +45,12 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_Content e
 			'config' => Mage::getSingleton('cms/wysiwyg_config')->getConfig(),
 		));
 
+        $fieldset->addField('image', 'image', array(
+            'label'     => Mage::helper('layeredlanding')->__('Image'),
+            'required'  => false,
+            'name'      => 'image',
+        ));
+
         $fieldset->addField('meta_title', 'text', array(
 			'label' => Mage::helper('layeredlanding')->__('Meta title'),
 			'class' => 'required-entry',

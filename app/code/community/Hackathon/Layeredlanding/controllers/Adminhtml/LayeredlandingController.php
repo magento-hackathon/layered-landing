@@ -47,94 +47,127 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
 	{
 		$this->_forward('edit');
 	}
-   
-	public function saveAction()
-	{
-		if ( $this->getRequest()->getPost() ) 
-		{
-			try {
-				$post_data = $this->getRequest()->getPost();
-				
-				$post_data['store_ids'] = implode(',', $post_data['store_ids']);
-				
-				$model = Mage::getModel('layeredlanding/layeredlanding');
-				
-				$model->setId($this->getRequest()->getParam('id'))
-					->setData('meta_title', $post_data['meta_title'])
-					->setData('meta_keywords', $post_data['meta_keywords'])
-					->setData('meta_description', $post_data['meta_description'])
-					->setData('page_title', $post_data['page_title'])
-					->setData('page_description', $post_data['page_description'])
-					->setData('page_url', $post_data['page_url'])
-					->setData('display_layered_navigation', $post_data['display_layered_navigation'])
-                    ->setData('display_in_top_navigation', $post_data['display_in_top_navigation'])
-					->setData('custom_layout_template', $post_data['custom_layout_template'])
-					->setData('custom_layout_update', $post_data['custom_layout_update'])
-					->setData('store_ids', $post_data['store_ids'])
-					->setData('category_ids', (int)$post_data['category_ids']);
 
-				$model->save();
-				
-				
-				$attributelanding_id = $model->getId();
-				
-				// save opening hours
-				if (isset($post_data['attributes']))
-				{
-					foreach ($post_data['attributes']['delete'] as $_key => $_row)
-					{
-						$delete = (int)$_row;
-						$object_data = $post_data['attributes']['value'][$_key];
-						
-						$attributes_object = Mage::getModel('layeredlanding/attributes')->load((int)$object_data['id']);
-						
-						if ($delete && 0 < (int)$attributes_object->getId()) // exists & required to delete
-						{
-							$attributes_object->delete();
-							continue;
-						}
+    public function saveAction() {
+        if ($this->getRequest()->getPost()) {
+            try {
+                $post_data = $this->getRequest()->getPost();
+
+                $post_data['store_ids'] = implode(',', $post_data['store_ids']);
+
+                $model = Mage::getModel('layeredlanding/layeredlanding');
+
+                $model->setId($this->getRequest()->getParam('id'))
+                    ->setData('meta_title', $post_data['meta_title'])
+                    ->setData('meta_keywords', $post_data['meta_keywords'])
+                    ->setData('meta_description', $post_data['meta_description'])
+                    ->setData('page_title', $post_data['page_title'])
+                    ->setData('page_description', $post_data['page_description'])
+                    ->setData('page_url', $post_data['page_url'])
+                    ->setData('display_layered_navigation', $post_data['display_layered_navigation'])
+                    ->setData('display_in_top_navigation', $post_data['display_in_top_navigation'])
+                    ->setData('custom_layout_template', $post_data['custom_layout_template'])
+                    ->setData('custom_layout_update', $post_data['custom_layout_update'])
+                    ->setData('store_ids', $post_data['store_ids'])
+                    ->setData('category_ids', (int)$post_data['category_ids']);
+
+                if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
+                    try {
+                        $uploader = new Varien_File_Uploader('image');
+
+                        $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'gif', 'png'));
+                        $uploader->setAllowRenameFiles(false);
+                        $uploader->setFilesDispersion(false);
+
+                        // Set media as the upload dir
+                        $media_path = Mage::getBaseDir('media') . '/landingpages/';
+                        $imgFilename = $media_path . $_FILES['image']['name'];
+
+                        while (file_exists($imgFilename)) {
+                            $pieces = array();
+
+                            $res = preg_match('/^(.+)_(\d+)$/', $imgFilename, $pieces);
+
+                            if (!$res) {
+                                $imgFilename .= '_1';
+                            } else {
+                                $imgFilename .= '_' . strval(intval($pieces[2]) + 1);
+                            }
+                        }
+
+                        // Upload the image
+                        $uploader->save($media_path, $_FILES['image']['name']);
+                        $model->setData('image', '/landingpages/' . $_FILES['image']['name']);
+                    } catch (Exception $e) {
+                        Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                        $this->_redirect('*/*/');
+                    }
+                } else {
+                    $model->unsetData('image');
+                }
+
+                if (isset($post_data['image']) && $post_data['image']['delete']) {
+                    $model->setData('image', '');
+                }
+
+                $model->save();
+
+                $attributelanding_id = $model->getId();
+
+                // save opening hours
+                if (isset($post_data['attributes'])) {
+                    foreach ($post_data['attributes']['delete'] as $_key => $_row) {
+                        $delete = (int)$_row;
+                        $object_data = $post_data['attributes']['value'][$_key];
+
+                        $attributes_object = Mage::getModel('layeredlanding/attributes')->load((int)$object_data['id']);
+
+                        if ($delete && 0 < (int)$attributes_object->getId()) // exists & required to delete
+                        {
+                            $attributes_object->delete();
+                            continue;
+                        }
 
                         // Check if the attribute and value values are set
                         $can_save = true;
                         if (0 == (int)$attributes_object->getId() && (empty($object_data['value']) || empty($object_data['attribute']))) // new item but no values
                         {
                             $can_save = false;
-                        }
-                        elseif (0 < (int)$attributes_object->getId() && empty($object_data['value'])) // existing item but no value
+                        } elseif (0 < (int)$attributes_object->getId() && empty($object_data['value'])) // existing item but no value
                         {
                             $can_save = false;
                         }
 
-						if (!$delete && $can_save) // save if not deleted and data checks out
-						{
-							$attributes_object->setData('layeredlanding_id', $attributelanding_id);
-							$attributes_object->setData('attribute_id', $object_data['attribute']);
-							$attributes_object->setData('value', $object_data['value']);
-							
-							$attributes_object->save();
-						}
-					}
-				}
-				
-				// And wrap up the transaction
-				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('layeredlanding')->__('Landingpage was successfully saved'));
-				Mage::getSingleton('adminhtml/session')->setLayeredlandingData(false);
+                        if (!$delete && $can_save) // save if not deleted and data checks out
+                        {
+                            $attributes_object->setData('layeredlanding_id', $attributelanding_id);
+                            $attributes_object->setData('attribute_id', $object_data['attribute']);
+                            $attributes_object->setData('value', $object_data['value']);
+
+                            $attributes_object->save();
+                        }
+                    }
+                }
+
+                // And wrap up the transaction
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('layeredlanding')->__('Landingpage was successfully saved'));
+                Mage::getSingleton('adminhtml/session')->setLayeredlandingData(false);
 
                 if ($this->getRequest()->getParam("back")) {
                     $this->_redirect("*/*/edit", array("id" => $model->getId()));
                     return;
                 }
-				$this->_redirect('*/*/');
-				return;
-			} catch (Exception $e) {
-				Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-				Mage::getSingleton('adminhtml/session')->setLayeredlandingData($this->getRequest()->getPost());
-				$this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
-				return;
-			}
-		}
-		$this->_redirect('*/*/');
-	}
+                $this->_redirect('*/*/');
+                return;
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                Mage::getSingleton('adminhtml/session')->setLayeredlandingData($this->getRequest()->getPost());
+                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+                return;
+            }
+        }
+        $this->_redirect('*/*/');
+    }
    
 	public function deleteAction()
 	{

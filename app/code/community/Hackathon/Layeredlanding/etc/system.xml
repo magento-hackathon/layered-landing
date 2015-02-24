@@ -36,6 +36,19 @@
         </sitemap>
         <catalog>
             <groups>
+                <frontend>
+                    <fields>
+                        <layeredlanding_show_leftnav_menu translate="label">
+                            <label>Show Landingpages menu in left navigation on landings page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </layeredlanding_show_leftnav_menu>
+                    </fields>
+                </frontend>
                 <seo>
                     <fields>
                         <layeredlanding_canonical_tag translate="label">

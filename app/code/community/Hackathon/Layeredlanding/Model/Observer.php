@@ -30,6 +30,14 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
             $landingpage = Mage::registry('current_landingpage');
 
             if ($landingpage) {
+                if($landingpage->getImage()) {
+                    // Replace category object in registry with an object with the image set
+                    $currentCategory = Mage::registry('current_category');
+                    $currentCategory->setData('image', '../../' . $landingpage->getImage());
+                    Mage::unregister('current_category');
+                    Mage::register('current_category', $currentCategory);
+                }
+
                 if ($headBlock = $block->getLayout()->getBlock('head')) {
                     if ($title = $landingpage->getMetaTitle()) {
                         $headBlock->setTitle($title);
