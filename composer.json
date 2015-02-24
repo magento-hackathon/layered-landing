@@ -23,32 +23,5 @@
         "extension",
         "module",
         "hackathon"
-    ],
-    "require": {
-        "php": ">=5.3.0",
-        "ecomdev/ecomdev_phpunit": "dev-dev"
-    },
-    "require-dev": {
-        "ecomdev/mage-ci": "dev-master",
-        "phpunit/phpunit": "3.7.*"
-    },
-    "suggest": {
-        "magento-hackathon/magento-composer-installer": "Allows to manage this package as a dependency"
-    },
-    "config": {
-        "bin-dir": "bin"
-    },
-    "repositories":[
-        {
-            "url": "https://github.com/EcomDev/EcomDev_PHPUnit",
-            "type": "git"
-        },
-        {
-            "type": "composer",
-            "url": "http://packages.firegento.com"
-        }
-    ],
-    "extra":{
-        "magento-root-dir": "test/"
-    }
+    ]
 }
