@@ -5,7 +5,11 @@
             <block type="layeredlanding/canonical" name="layeredlanding.canonical" after="-" template="layeredlanding/canonical.phtml"/>
         </reference>
         <reference name="left">
-            <block type="layeredlanding/leftnav" name="layeredlanding.leftnav" after="-" template="layeredlanding/leftnav.phtml"/>
+            <block type="layeredlanding/leftnav" name="layeredlanding.leftnav" after="-">
+                <action method="setTemplate" ifconfig="catalog/frontend/layeredlanding_show_leftnav_menu">
+                    <template>layeredlanding/leftnav.phtml</template>
+                </action>
+            </block>
         </reference>
     </layeredlanding_page>
     <default>

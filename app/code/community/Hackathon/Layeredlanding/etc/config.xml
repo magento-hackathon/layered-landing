@@ -206,6 +206,9 @@
             </landing>
 		</sitemap>
         <catalog>
+            <frontend>
+                <layeredlanding_show_leftnav_menu>1</layeredlanding_show_leftnav_menu>
+            </frontend>
             <seo>
                 <layeredlanding_canonical_tag>1</layeredlanding_canonical_tag>
             </seo>
