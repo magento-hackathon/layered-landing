@@ -35,12 +35,28 @@ class Hackathon_Layeredlanding_Model_Options_Categories extends Mage_Core_Model_
                 }
                 $nameParts[] = $allCategoriesArray[$catId]['name'];
             }
-            $categories[] = array(
+            $categories[$categoryId] = array(
                 'value' => $categoryId,
                 'label' => implode(' / ', $nameParts)
             );
         }
 
+        // If landingpage already exists, move chosen categories to top of list for clarity
+        $landingpageId = Mage::app()->getRequest()->getParam('id');
+        if($landingpageId) {
+            $landingpage = Mage::getModel('layeredlanding/layeredlanding')->load($landingpageId);
+            $categoryIds = explode(',', $landingpage->getCategoryIds());
+            foreach($categoryIds as $catId) {
+                $this->moveToTop($categories, $catId);
+            }
+        }
+
         return $categories;
+    }
+
+    private function moveToTop(&$array, $key) {
+        $temp = array($key => array('value' => $array[$key]['value'], 'label' => $array[$key]['label']));
+        unset($array[$key]);
+        $array = $temp + $array;
     }
 }

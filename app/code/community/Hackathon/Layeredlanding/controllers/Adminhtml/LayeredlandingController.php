@@ -54,6 +54,7 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
                 $post_data = $this->getRequest()->getPost();
 
                 $post_data['store_ids'] = implode(',', $post_data['store_ids']);
+                $post_data['category_ids'] = implode(',', $post_data['category_ids']);
 
                 $model = Mage::getModel('layeredlanding/layeredlanding');
 
@@ -69,7 +70,7 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
                     ->setData('custom_layout_template', $post_data['custom_layout_template'])
                     ->setData('custom_layout_update', $post_data['custom_layout_update'])
                     ->setData('store_ids', $post_data['store_ids'])
-                    ->setData('category_ids', (int)$post_data['category_ids']);
+                    ->setData('category_ids', $post_data['category_ids']);
 
                 if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
                     try {

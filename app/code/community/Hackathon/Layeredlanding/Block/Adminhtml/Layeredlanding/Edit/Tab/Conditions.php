@@ -12,13 +12,14 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_Condition
 			'class' => 'fieldset-wide'
 		));
 
-        $fieldset->addField('category_ids', 'select', array(
+        $fieldset->addField('category_ids', 'multiselect', array(
 			'label' => Mage::helper('layeredlanding')->__('Categories'),
 			'class' => 'required-entry',
 			'required' => true,
 			'name' => 'category_ids',
 			'onchange' => '_estimate_product_count();',
 			'values' => Mage::getSingleton('layeredlanding/options_categories')->toOptionArray(),
+            'style' => 'width:80%'
 		));
 
         /**

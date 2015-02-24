@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Hackathon_Layeredlanding>
-            <version>0.5.0</version>
+            <version>0.6.0</version>
         </Hackathon_Layeredlanding>
     </modules>
     <global>
@@ -148,6 +148,15 @@
                     </layeredlanding>
                 </observers>
             </catalog_controller_category_init_after>
+            <catalog_product_collection_load_before>
+                <observers>
+                    <layeredlanding>
+                        <type>singleton</type>
+                        <class>layeredlanding/observer</class>
+                        <method>addMultipleCategoriesToCollection</method>
+                    </layeredlanding>
+                </observers>
+            </catalog_product_collection_load_before>
         </events>
     </frontend>
     <admin>

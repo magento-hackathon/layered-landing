@@ -96,6 +96,29 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
         $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('TOPMENU'));
     }
 
+    public function addMultipleCategoriesToCollection($observer) {
+        // Infinite loop protection
+        if (Mage::registry('added_multiple_categories')) return;
+        Mage::register('added_multiple_categories', true);
+
+        $collection = $observer->getEvent()->getCollection();
+        $landingpage = Mage::registry('current_landingpage');
+        $categoryIdsValue = $landingpage->getCategoryIds();
+        $categoryIds = explode(',', $categoryIdsValue);
+
+        // Fetch the extra categories (skip the first because that one is already loaded)
+        if (count($categoryIds) > 1) {
+            $extraCategoryIds = array_slice($categoryIds, 1);
+            foreach ($extraCategoryIds as $extraCategoryId) {
+                $extraProductCollection = Mage::getModel('catalog/category')->load($extraCategoryId)->getProductCollection();
+                foreach ($extraProductCollection as $item) {
+                    $collection->addItem($item);
+                }
+            }
+        }
+        return $this;
+    }
+
     public function pageBlockHtmlTopmenuGethtmlBefore($observer)
     {
         /** @var $menu Varien_Data_Tree_Node */
