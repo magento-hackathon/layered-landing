@@ -98,7 +98,7 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
 
     public function addMultipleCategoriesToCollection($observer) {
         // Infinite loop protection
-        if (Mage::registry('added_multiple_categories')) return;
+        if (Mage::registry('added_multiple_categories')) return $this;
         Mage::register('added_multiple_categories', true);
 
         $collection = $observer->getEvent()->getCollection();
@@ -110,13 +110,30 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
 
         // Fetch the extra categories (skip the first because that one is already loaded)
         if (count($categoryIds) > 1) {
-            $extraCategoryIds = array_slice($categoryIds, 1);
-            foreach ($extraCategoryIds as $extraCategoryId) {
-                $extraProductCollection = Mage::getModel('catalog/category')->load($extraCategoryId)->getProductCollection();
-                foreach ($extraProductCollection as $item) {
-                    $collection->addItem($item);
-                }
-            }
+			
+		$collection = Mage::getResourceModel('catalog/product_collection');
+			
+		// enable filtering on multiple categories
+		$collection->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id=entity_id', null, 'left');
+		$collection->addAttributeToFilter('category_id', array('in' => $categoryIds));
+			
+		Mage::getSingleton('cataloginventory/stock')->addInStockFilterToCollection($collection);
+			
+		$collection->addAttributeToFilter('visibility', array(
+			Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
+			Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG
+		)); 
+		$collection->addAttributeToFilter('status', Mage_Catalog_Model_Product_Status::STATUS_ENABLED);
+
+	        foreach ($landingpage->getAttributes() as $attribute) {
+            	$attr = Mage::getModel('eav/entity_attribute')->load($attribute->getAttributeId());
+	            $collection->addAttributeToFilter($attr->getAttributeCode(), $attribute->getValue());
+	        }
+			
+		$collection->getSelect()->group('entity_id');
+		$collection->addAttributeToSelect(
+			Mage::getSingleton('catalog/config')->getProductAttributes()
+		);
         }
         return $this;
     }
