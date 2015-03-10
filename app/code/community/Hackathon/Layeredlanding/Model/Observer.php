@@ -101,7 +101,6 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
         if (Mage::registry('added_multiple_categories')) return $this;
         Mage::register('added_multiple_categories', true);
 
-        $collection = $observer->getEvent()->getCollection();
         $landingpage = Mage::registry('current_landingpage');
         if(!$landingpage || !(int)$landingpage->getId()) return $this;
         
