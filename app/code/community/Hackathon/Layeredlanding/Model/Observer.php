@@ -103,6 +103,8 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
 
         $collection = $observer->getEvent()->getCollection();
         $landingpage = Mage::registry('current_landingpage');
+        if(!$landingpage || !(int)$landingpage->getId()) return $this;
+        
         $categoryIdsValue = $landingpage->getCategoryIds();
         $categoryIds = explode(',', $categoryIdsValue);
 
