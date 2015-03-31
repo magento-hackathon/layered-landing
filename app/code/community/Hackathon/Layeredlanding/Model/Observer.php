@@ -9,16 +9,25 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
         $router = new Hackathon_Layeredlanding_Controller_Router();
         $front->addRouter('hackathon_layeredlanding', $router);
     }
-	
-	public function setCategoryData($observer)
-	{
-		$landingpage = Mage::registry('current_landingpage');
-		if (is_null($landingpage)) return $this; // no landingpage available, return
-		
-		$category = $observer->getCategory();
-		$category->setData('name', $landingpage->getData('page_title'));
-		$category->setData('description', $landingpage->getData('page_description'));
-	}
+
+    public function setCategoryData($observer)
+    {
+        $landingpage = Mage::registry('current_landingpage');
+        if (is_null($landingpage)) return $this; // no landingpage available, return
+
+        $category = $observer->getCategory();
+        $category->setData('name', $landingpage->getData('page_title'));
+        $category->setData('description', $landingpage->getData('page_description'));
+    }
+
+    public function coreBlockAbstractToHtmlBefore($observer)
+    {
+        $landingpage = Mage::registry('current_landingpage');
+        // Replace the default template with the layeredlanding one for fixed logic when removing filters
+        if ($landingpage && $observer->getBlock() instanceof Mage_Catalog_Block_Layer_State) {
+            $observer->getBlock()->setTemplate('layeredlanding/catalog/layer/state.phtml');
+        }
+    }
 
     public function coreBlockAbstractPrepareLayoutAfter($observer)
     {
@@ -103,36 +112,36 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
 
         $landingpage = Mage::registry('current_landingpage');
         if(!$landingpage || !(int)$landingpage->getId()) return $this;
-        
+
         $categoryIdsValue = $landingpage->getCategoryIds();
         $categoryIds = explode(',', $categoryIdsValue);
 
         // Fetch the extra categories (skip the first because that one is already loaded)
         if (count($categoryIds) > 1) {
-			
-		$collection = Mage::getResourceModel('catalog/product_collection');
-			
-		// enable filtering on multiple categories
-		$collection->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id=entity_id', null, 'left');
-		$collection->addAttributeToFilter('category_id', array('in' => $categoryIds));
-			
-		Mage::getSingleton('cataloginventory/stock')->addInStockFilterToCollection($collection);
-			
-		$collection->addAttributeToFilter('visibility', array(
-			Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
-			Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG
-		)); 
-		$collection->addAttributeToFilter('status', Mage_Catalog_Model_Product_Status::STATUS_ENABLED);
 
-	        foreach ($landingpage->getAttributes() as $attribute) {
-            	$attr = Mage::getModel('eav/entity_attribute')->load($attribute->getAttributeId());
-	            $collection->addAttributeToFilter($attr->getAttributeCode(), $attribute->getValue());
-	        }
-			
-		$collection->getSelect()->group('entity_id');
-		$collection->addAttributeToSelect(
-			Mage::getSingleton('catalog/config')->getProductAttributes()
-		);
+            $collection = Mage::getResourceModel('catalog/product_collection');
+
+            // enable filtering on multiple categories
+            $collection->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id=entity_id', null, 'left');
+            $collection->addAttributeToFilter('category_id', array('in' => $categoryIds));
+
+            Mage::getSingleton('cataloginventory/stock')->addInStockFilterToCollection($collection);
+
+            $collection->addAttributeToFilter('visibility', array(
+                Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
+                Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG
+            ));
+            $collection->addAttributeToFilter('status', Mage_Catalog_Model_Product_Status::STATUS_ENABLED);
+
+            foreach ($landingpage->getAttributes() as $attribute) {
+                $attr = Mage::getModel('eav/entity_attribute')->load($attribute->getAttributeId());
+                $collection->addAttributeToFilter($attr->getAttributeCode(), $attribute->getValue());
+            }
+
+            $collection->getSelect()->group('entity_id');
+            $collection->addAttributeToSelect(
+                Mage::getSingleton('catalog/config')->getProductAttributes()
+            );
         }
         return $this;
     }
