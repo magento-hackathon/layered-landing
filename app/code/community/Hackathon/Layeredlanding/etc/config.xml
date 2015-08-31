@@ -226,6 +226,7 @@
         <catalog>
             <frontend>
                 <layeredlanding_show_leftnav_menu>1</layeredlanding_show_leftnav_menu>
+                <layeredlanding_add_cachetag>1</layeredlanding_add_cachetag>
             </frontend>
             <seo>
                 <layeredlanding_canonical_tag>1</layeredlanding_canonical_tag>

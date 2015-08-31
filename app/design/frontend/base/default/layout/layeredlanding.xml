@@ -19,7 +19,7 @@
     </layeredlanding_page>
     <default>
         <reference name="catalog.topnav">
-            <action method="addCacheTag">
+            <action method="addCacheTag" ifconfig="catalog/frontend/layeredlanding_add_cachetag">
                 <value>TOPMENU</value>
             </action>
         </reference>
