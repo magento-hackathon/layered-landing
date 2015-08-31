@@ -40,7 +40,8 @@ class Hackathon_Layeredlanding_Model_Layeredlanding extends Mage_Core_Model_Abst
         $resource = Mage::getModel('core/resource');
         $db = $resource->getConnection('core_write');
 
-        $attributes = $db->fetchPairs('SELECT attribute_id,value FROM layeredlanding_attributes WHERE layeredlanding_id = ?', array($this->getId()));
+	$tablePrefix = (string)Mage::getConfig()->getTablePrefix();
+        $attributes = $db->fetchPairs("SELECT attribute_id,value FROM {$tablePrefix}layeredlanding_attributes WHERE layeredlanding_id = ?", array($this->getId()));
         if($attributes) {
             $this->setData('layered_attributes', $attributes);
         }
