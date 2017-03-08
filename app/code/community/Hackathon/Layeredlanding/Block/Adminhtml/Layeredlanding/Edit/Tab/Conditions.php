@@ -12,8 +12,16 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Tab_Condition
             'class' => 'fieldset-wide'
         ));
 
-        $fieldset->addField('category_ids', 'multiselect', array(
-            'label' => Mage::helper('layeredlanding')->__('Categories'),
+
+        $type = 'multiselect';
+        $label = Mage::helper('layeredlanding')->__('Categories');
+        if (Mage::helper('core')->isModuleEnabled('Emico_Tweakwise')) {
+            $type = 'select';
+            $label = Mage::helper('layeredlanding')->__('Category');
+        }
+
+        $fieldset->addField('category_ids', $type, array(
+            'label' => $label,
             'class' => 'required-entry',
             'required' => true,
             'name' => 'category_ids',
