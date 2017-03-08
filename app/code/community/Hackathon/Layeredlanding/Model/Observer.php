@@ -68,7 +68,8 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
             /** @var $breadcrumbsBlock Mage_Page_Block_Html_Breadcrumbs */
             if (($breadcrumbsBlock = $block->getLayout()->getBlock('breadcrumbs')) && $landingpage) {
                 $breadcrumbsBlock->addCrumb($landingpage->getPageTitle(), array(
-                    'label' => $landingpage->getPageTitle()
+                    'label' => $landingpage->getPageTitle(),
+                    'link' => $landingpage->getPageUrl()
                 ));
             }
 
@@ -132,11 +133,6 @@ class Hackathon_Layeredlanding_Model_Observer extends Mage_Core_Model_Abstract
                 Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG
             ));
             $collection->addAttributeToFilter('status', Mage_Catalog_Model_Product_Status::STATUS_ENABLED);
-
-            foreach ($landingpage->getAttributes() as $attribute) {
-                $attr = Mage::getModel('eav/entity_attribute')->load($attribute->getAttributeId());
-                $collection->addAttributeToFilter($attr->getAttributeCode(), $attribute->getValue());
-            }
 
             $collection->getSelect()->group('entity_id');
             $collection->addAttributeToSelect(

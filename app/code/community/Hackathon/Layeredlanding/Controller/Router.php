@@ -2,6 +2,10 @@
 
 class Hackathon_Layeredlanding_Controller_Router extends Mage_Core_Controller_Varien_Router_Standard
 {
+    /**
+     * @param Zend_Controller_Request_Http $request
+     * @return bool
+     */
     public function match(Zend_Controller_Request_Http $request) {
         if (!Mage::isInstalled()) {
             Mage::app()->getFrontController()->getResponse()
@@ -34,13 +38,38 @@ class Hackathon_Layeredlanding_Controller_Router extends Mage_Core_Controller_Va
             ->setActionName('view')
             ->setParam('id', $firstCategoryId);
 
-        /** @var $attribute Hackathon_Layeredlanding_Model_Attributes */
-        foreach ($landingPage->getAttributes() as $attribute) {
-            $attr = Mage::getModel('eav/entity_attribute')->load($attribute->getAttributeId());
-            $request->setParam($attr->getAttributeCode(), $attribute->getValue());
+        if (Mage::helper('core')->isModuleEnabled('Emico_Tweakwise')) {
+            require_once Mage::getModuleDir('controllers', 'Emico_Tweakwise') . DS . 'Catalog' . DS . 'CategoryController.php';
+
+            $filters = array();
+            foreach ($landingPage->getAttributes()->getData() as $filterArray) {
+                $attributeModel = Mage::getModel('eav/entity_attribute')->load($filterArray['attribute_id']);
+                $value = $attributeModel->getSource()->getOptionText($filterArray['value']);
+
+                if (!isset($filters[$attributeModel->getAttributeCode()])) {
+                    $filters[$attributeModel->getAttributeCode()] = [$value];
+                } else {
+                    $filters[$attributeModel->getAttributeCode()][] = $value;
+                }
+            }
+
+            $query = array();
+            foreach ($filters as $attributeCode => $values) {
+                $query[$attributeCode] = implode('|',  $values);
+            }
+
+            $controllerClassName = 'Emico_Tweakwise_Catalog_CategoryController';
+
+            $request->setRequestUri($request->getRequestUri() . '?' . http_build_query($query));
+        } else {
+            /** @var $attribute Hackathon_Layeredlanding_Model_Attributes */
+            foreach ($landingPage->getAttributes() as $attribute) {
+                $attr = Mage::getModel('eav/entity_attribute')->load($attribute->getAttributeId());
+                $request->setParam($attr->getAttributeCode(), $attribute->getValue());
+            }
+            $controllerClassName = $this->_validateControllerClassName('Mage_Catalog', 'category');
         }
 
-        $controllerClassName = $this->_validateControllerClassName('Mage_Catalog', 'category');
         $controllerInstance = Mage::getControllerInstance($controllerClassName, $request, $this->getFront()->getResponse());
 
         $request->setAlias(
