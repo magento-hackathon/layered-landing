@@ -54,7 +54,10 @@ class Hackathon_Layeredlanding_Adminhtml_LayeredlandingController extends Mage_A
                 $post_data = $this->getRequest()->getPost();
 
                 $post_data['store_ids'] = implode(',', $post_data['store_ids']);
-                $post_data['category_ids'] = implode(',', $post_data['category_ids']);
+		    
+                if (is_array($post_data['category_ids'])) {
+                    $post_data['category_ids'] = implode(',', $post_data['category_ids']);
+                }
 
                 $model = Mage::getModel('layeredlanding/layeredlanding');
 
