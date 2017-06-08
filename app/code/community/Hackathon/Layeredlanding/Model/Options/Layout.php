@@ -1,6 +1,6 @@
 <?php
 
-class Hackathon_Layeredlanding_Model_Options_Layout extends Mage_Page_Model_Source_Layout
+class Hackathon_Layeredlanding_Model_Options_Layout
 {
 
     public function toOptionArray()
