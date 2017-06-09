@@ -34,7 +34,8 @@ class Hackathon_Layeredlanding_Block_Adminhtml_Layeredlanding_Edit_Renderer_Attr
 	public function getAttributeOptions($active_id = 0)
 	{
 		$attributes = Mage::getModel('layeredlanding/options_attributes')->toOptionArray();
-		
+
+        $html = '';
 		if (!$active_id) $html = '<option value="">-- select --</option>'; // no selection yet
 
 		foreach ($attributes as $attribute)
