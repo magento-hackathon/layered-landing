@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Hackathon_Layeredlanding>
-            <version>0.6.0</version>
+            <version>0.6.1</version>
         </Hackathon_Layeredlanding>
     </modules>
     <global>
