@@ -1,6 +1,6 @@
 <?php
 
-class Hackathon_Layeredlanding_Model_Options_Categories extends Mage_Core_Model_Abstract
+class Hackathon_Layeredlanding_Model_Options_Categories
 {
 
     public function toOptionArray()
